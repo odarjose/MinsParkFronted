@@ -1,11 +1,4 @@
-import {
-  Brain,
-  Calculator,
-  Trophy,
-  Layers,
-  PieChart,
-  Flame,
-} from "lucide-react";
+import { Calculator, Layers, PieChart, Flame } from "lucide-react";
 import { ReactNode } from "react";
 
 export type Topic = {
