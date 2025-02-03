@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { topics } from "@/utils/topics";
+import { topics } from "@/utils/topicsUtils";
 import { TopicCard } from "@/components/common/TopicCard";
 import { DailyChallenge } from "@/components/common/DailyChallenge";
 

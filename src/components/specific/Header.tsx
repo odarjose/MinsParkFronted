@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Home, BookOpen, Brain, User, Menu, X } from "lucide-react";
+import { Home, Brain, User,Pickaxe ,Menu, X } from "lucide-react";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,11 +51,11 @@ export function Header() {
           </Link>
 
           <Link
-            to="/lessiones"
+            to="/progress"
             className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 sm:p-0"
           >
-            <BookOpen className="w-6 h-6" />
-            <span>Lecciones</span>
+            <Pickaxe className="w-6 h-6" />
+            <span>Progreso</span>
           </Link>
 
           <Link
@@ -67,7 +67,7 @@ export function Header() {
           </Link>
 
           <Link
-            to="/perfil"
+            to="/profile"
             className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 sm:p-0"
           >
             <User className="w-6 h-6" />

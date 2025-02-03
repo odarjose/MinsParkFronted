@@ -6,36 +6,36 @@ export type Topic = {
   title: string;
   description: string;
   icon: ReactNode;
-  difficulty: "Easy" | "Medium" | "Hard";
+  difficulty: "Facil" | "Medio" | "Fuerte";
 };
 
 export const topics: Topic[] = [
   {
     id: 1,
     title: "Sistema de Numeracion Decimal",
-    description: "Master your times tables from 1 to 12",
+    description: "Descubre el poder de los numeros",
     icon: <Calculator className="w-8 h-8 text-purple-500" />,
-    difficulty: "Easy",
+    difficulty: "Facil",
   },
   {
     id: 2,
     title: "Multiplicacion",
-    description: "Learn to add, subtract, and compare fractions",
+    description: "¡Multiplica tus conocimientos!",
     icon: <Layers className="w-8 h-8 text-blue-500" />,
-    difficulty: "Medium",
+    difficulty: "Medio",
   },
   {
     id: 3,
     title: "Division",
-    description: "Solve real-world math problems",
+    description: "¡Divide y conquista!",
     icon: <PieChart className="w-8 h-8 text-yellow-500" />,
-    difficulty: "Hard",
+    difficulty: "Fuerte",
   },
   {
     id: 4,
     title: "Potencias",
-    description: "Solve real-world math problems",
+    description: "¡Eleva tu aprendizaje al máximo!",
     icon: <Flame className="w-8 h-8 text-red-500" />,
-    difficulty: "Hard",
+    difficulty: "Fuerte",
   },
 ];
