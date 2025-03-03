@@ -1,7 +1,7 @@
 /** este layout se va a repetir en todas las paginas y sera el contenedor principal de la aplicacion */
 
-import { Header } from "@/components/specific/Header";
-import { Footer } from "@/components/specific/Footer";
+import { Header } from "@/components/common/Header";
+import { Footer } from "@/components/common/Footer";
 
 
 import { Outlet } from "react-router-dom";
