@@ -25,7 +25,7 @@ export function Home() {
             description={topic.description}
             icon={topic.icon}
             difficulty={topic.difficulty}
-            onClick={() => navigate(`/lessons/${topic.id}`)}
+            onClick={() => navigate(topic.path)}
             size="medium" // Puedes cambiar a 'small' o 'large'
           />
         ))}

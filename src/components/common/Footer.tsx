@@ -1,6 +1,4 @@
 "use client";
-
-
 export function Footer() {
     return (
         <footer className="bg-pink-50 mt-12">
