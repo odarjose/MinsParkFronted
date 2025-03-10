@@ -15,3 +15,14 @@ export interface LevelsComponentsProps {
   title: string;
   levels: Level[];
 }
+
+// Definir los tipos de las questions
+
+export interface Question {
+  type: "input" | "multiple-select" | "ordering";
+  question?: string; // Texto de la pregunta
+  options?: { value: string; isCorrect: boolean }[]; // Opciones para "multiple-select"
+  powers?: string[]; // Potencias para "ordering"
+  correctOrder?: string[]; // Orden correcto para "ordering"
+  correctAnswer?: number; // Respuesta correcta para "input"
+}
