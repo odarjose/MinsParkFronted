@@ -80,7 +80,7 @@ const PowerGameLevel3: React.FC = () => {
         selectedOptions.every(
           (option) =>
             currentQuestion.options?.find((opt) => opt.value === option)
-              ?.isCorrect
+              ?.isCorrect,
         ) &&
         selectedOptions.length ===
           currentQuestion.options?.filter((opt) => opt.isCorrect).length;
@@ -199,8 +199,8 @@ const PowerGameLevel3: React.FC = () => {
                         if (selectedOptions.includes(option.value)) {
                           setSelectedOptions(
                             selectedOptions.filter(
-                              (opt) => opt !== option.value
-                            )
+                              (opt) => opt !== option.value,
+                            ),
                           );
                         } else {
                           setSelectedOptions([
@@ -229,7 +229,7 @@ const PowerGameLevel3: React.FC = () => {
                   {currentQuestion.question}
                 </p>
                 <div className="flex flex-col gap-4">
-                  {currentQuestion.powers?.map((power, index) => (
+                  {currentQuestion.powers?.map((_power, index) => (
                     <select
                       key={index}
                       value={orderedPowers[index] || ""}
@@ -272,4 +272,4 @@ const PowerGameLevel3: React.FC = () => {
   );
 };
 
-export default PowerGameLevel3
+export default PowerGameLevel3;
