@@ -1,63 +1,42 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
+import { QuestionMultiplyLevel1 } from "@/interfaces/gamesMultiplyInterface";
 
-import { Question } from "@/interfaces/questionInterface";
-
-const GamesPowers: React.FC = () => {
+const MultiplicationGameLevel1: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | string | null>(
-    null
-  ); // Para preguntas de selección múltiple
+  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Para selección múltiple
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const questions: Question[] = [
+  const questions: QuestionMultiplyLevel1[] = [
     {
       type: "multiple-choice",
-      question: "2 x 2 x 2 x 2 = ",
-      options: ["2^6", "2^4", "2^5", "2^0"],
-      correctAnswer: "2^4",
+      question: "125 × ____ = 500",
+      options: [2, 3, 4],
+      correctAnswer: 4,
     },
     {
       type: "multiple-choice",
-      question: "3 x 3 x 3 x 3 x 3 x 3 = ",
-      options: ["3^1", "3^6", "3^10", "3^7"],
-      correctAnswer: "3^6",
+      question: "236 × 5 = ____",
+      options: [1180, 1280, 1380],
+      correctAnswer: 1180,
     },
     {
       type: "multiple-choice",
-      question: "9 x 9 x 9 x 9 x 9 = ",
-      options: ["9^2", "9^5", "9^6", "9^8"],
-      correctAnswer: "9^5",
-    },
-    {
-      type: "multiple-choice",
-      question: "¿Cuál es el resultado de 2^3?",
-      options: [6, 4, 8, 16],
-      correctAnswer: 8,
-    },
-    {
-      type: "multiple-choice",
-      question: "¿Cuál es el resultado de 4^3?",
-      options: [64, 75, 4, 65],
-      correctAnswer: 64,
-    },
-    {
-      type: "multiple-choice",
-      question: "¿Cuál es el resultado de 9^2?",
-      options: [78, 49, 80, 81],
-      correctAnswer: 81,
+      question: "____ × 3 = 1,026",
+      options: [342, 352, 362],
+      correctAnswer: 342,
     },
   ];
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null); // Resetear la seleccion para la siguiente pregunta
+      setSelectedOption(null); // Resetear la selección para la siguiente pregunta
     } else {
       setShowSummary(true);
     }
@@ -70,10 +49,11 @@ const GamesPowers: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar el confeti por 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
+
     setTimeout(handleNextQuestion, 1000);
   };
 
@@ -88,7 +68,7 @@ const GamesPowers: React.FC = () => {
 
   if (showSummary) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full text-center relative">
           <Trophy className="text-yellow-500 mx-auto mb-4 w-16 h-16 animate-bounce" />
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -111,7 +91,7 @@ const GamesPowers: React.FC = () => {
     );
   }
 
-  const currentQuestion = questions[currentQuestionIndex]; 
+  const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4 relative">
@@ -138,32 +118,30 @@ const GamesPowers: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Potencia == Diversión
+              Multiplicación Fun: Nivel 1
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            {currentQuestion.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedOption(option)}
-                className={`
-                  p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
-                  ${
-                    selectedOption === option
-                      ? option === currentQuestion.correctAnswer
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
-                      : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
-                  }
-                `}
-              >
-                {option}
-              </button>
-            ))}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              {currentQuestion.options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedOption(option)}
+                  className={`
+                    p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
+                    ${
+                      selectedOption === option
+                        ? "bg-yellow-500 text-white"
+                        : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
+                    }
+                  `}
+                >
+                  {option.toLocaleString()}{" "}
+                  {/* Formatear números grandes con comas */}
+                </button>
+              ))}
+            </div>
           </div>
 
           <button
@@ -179,4 +157,4 @@ const GamesPowers: React.FC = () => {
   );
 };
 
-export default GamesPowers;
+export default MultiplicationGameLevel1;

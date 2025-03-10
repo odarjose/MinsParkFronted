@@ -12,3 +12,5 @@ export interface MathAreaProps {
     icon: ReactNode;
   };
 }
+
+
