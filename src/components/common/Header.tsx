@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Home, Brain, User,Pickaxe ,Menu, X } from "lucide-react";
+import { Home, Brain, User, Pickaxe, Menu, X } from "lucide-react";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,7 +39,7 @@ export function Header() {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } sm:flex sm:space-x-6 absolute sm:static top-16 lg:top-2 right-0 bg-pink-50  w-full sm:w-auto  sm:shadow-none p-4 sm:p-0          
+          } sm:flex sm:space-x-6 absolute sm:static top-16 lg:top-2 right-0 bg-pink-50  w-full sm:w-auto  sm:shadow-none p-4 sm:p-0
           `}
         >
           <Link
