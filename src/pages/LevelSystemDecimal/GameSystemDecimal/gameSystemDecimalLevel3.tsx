@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
 import { QuestionGameDecimalLevel3 } from "@/interfaces/gamesDecimal";
@@ -9,45 +9,68 @@ const DecimalSystemGameLevel3: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null); // Para selección múltiple
+  const [selectedValues, setSelectedValues] = useState<string[]>([]); // Para almacenar las selecciones
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const questions: QuestionGameDecimalLevel3[] = [
-    {
-      type: "multiple-choice",
-      question:
-        "Completa la descomposición del número 47,306.\nDecenas de mil | Unidades de mil | Centenas | Decenas | Unidades",
-      options: ["7 – 3 – 0 - 4 - 6", "4 - 7 – 3 – 0 - 6", "3 – 0 – 7 – 6 - 4"],
-      correctAnswer: "4 - 7 – 3 – 0 - 6",
-    },
-    {
-      type: "multiple-choice",
-      question:
-        "Completa la descomposición del número 5,678,302.\nMillones | Centenas de mil | Decenas de mil | Unidades de mil | Centenas | Decenas | Unidades",
-      options: [
-        "5 – 6 – 7 - 8 – 3 – 0 - 2",
-        "6 - 8 – 0 – 5 – 3 – 2 - 7",
-        "7 – 8 -3 – 2 – 5 – 6 - 0",
-      ],
-      correctAnswer: "5 – 6 – 7 - 8 – 3 – 0 - 2",
-    },
-    {
-      type: "multiple-choice",
-      question:
-        "Ubica el número 8,015,246 en la tabla posicional.\nMillones | Centenas de mil | Decenas de mil | Unidades de mil | Centenas | Decenas | Unidades",
-      options: [
-        "8 – 1 – 5 - 0 – 2 – 4 - 6",
-        "6 - 1 – 0 – 8 – 5 – 2 - 4",
-        "8 – 0 -1 –  5 – 2 – 4 - 6",
-      ],
-      correctAnswer: "8 – 0 -1 –  5 – 2 – 4 - 6",
-    },
-  ];
+  const questions = React.useMemo<QuestionGameDecimalLevel3[]>(
+    () => [
+      {
+        type: "table-positioning",
+        question: "Completa la descomposición del número 47,306.",
+        positions: [
+          "Decenas de mil",
+          "Unidades de mil",
+          "Centenas",
+          "Decenas",
+          "Unidades",
+        ],
+        options: ["0", "3", "4", "6", "7"],
+        correctAnswer: ["4", "7", "3", "0", "6"],
+      },
+      {
+        type: "table-positioning",
+        question: "Completa la descomposición del número 5,678,302.",
+        positions: [
+          "Millones",
+          "Centenas de mil",
+          "Decenas de mil",
+          "Unidades de mil",
+          "Centenas",
+          "Decenas",
+          "Unidades",
+        ],
+        options: ["0", "2", "3", "5", "6", "7", "8"],
+        correctAnswer: ["5", "6", "7", "8", "3", "0", "2"],
+      },
+      {
+        type: "table-positioning",
+        question: "Ubica el número 8,015,246 en la tabla posicional.",
+        positions: [
+          "Millones",
+          "Centenas de mil",
+          "Decenas de mil",
+          "Unidades de mil",
+          "Centenas",
+          "Decenas",
+          "Unidades",
+        ],
+        options: ["0", "1", "2", "4", "5", "6", "8"],
+        correctAnswer: ["8", "0", "1", "5", "2", "4", "6"],
+      },
+    ],
+    [],
+  );
+
+  useEffect(() => {
+    // Inicializar las selecciones vacías para cada pregunta
+    setSelectedValues(
+      Array(questions[currentQuestionIndex].positions.length).fill(""),
+    );
+  }, [currentQuestionIndex, questions]);
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null); // Resetear la selección para la siguiente pregunta
     } else {
       setShowSummary(true);
     }
@@ -56,7 +79,11 @@ const DecimalSystemGameLevel3: React.FC = () => {
   const handleSubmit = () => {
     const currentQuestion = questions[currentQuestionIndex];
 
-    if (selectedOption === currentQuestion.correctAnswer) {
+    const isCorrect = selectedValues.every(
+      (value, index) => value === currentQuestion.correctAnswer[index],
+    );
+
+    if (isCorrect) {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
@@ -74,12 +101,12 @@ const DecimalSystemGameLevel3: React.FC = () => {
     setCorrectAnswers(0);
     setIncorrectAnswers(0);
     setShowSummary(false);
-    setSelectedOption(null);
+    setSelectedValues([]);
   };
 
   if (showSummary) {
     return (
-      <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-pink-50 to-purple-600 flex items-center justify-center p-4">
         <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full text-center relative">
           <Trophy className="text-yellow-500 mx-auto mb-4 w-16 h-16 animate-bounce" />
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -105,7 +132,7 @@ const DecimalSystemGameLevel3: React.FC = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-pink-50 flex items-center justify-center p-4 relative">
       {/* Animación de Confeti */}
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -131,32 +158,42 @@ const DecimalSystemGameLevel3: React.FC = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
               Sistema Decimal Fun: Nivel 3
             </h1>
-            <p className="text-xl text-gray-600 mb-2 whitespace-pre-line">
+            <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
+
+            {/* Tabla Posicional */}
             <div className="grid grid-cols-1 gap-4 mb-8">
-              {currentQuestion.options.map((option, index) => (
-                <button
+              {currentQuestion.positions.map((position, index) => (
+                <div
                   key={index}
-                  onClick={() => setSelectedOption(option)}
-                  className={`
-                    p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
-                    ${
-                      selectedOption === option
-                        ? "bg-yellow-500 text-white"
-                        : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
-                    }
-                  `}
+                  className="flex items-center justify-between gap-4"
                 >
-                  {option}
-                </button>
+                  <p className="text-lg font-bold">{position}:</p>
+                  <select
+                    value={selectedValues[index] || ""}
+                    onChange={(e) => {
+                      const newValues = [...selectedValues];
+                      newValues[index] = e.target.value;
+                      setSelectedValues(newValues);
+                    }}
+                    className="p-2 px-8 rounded-lg border-2 border-indigo-300 focus:border-indigo-500 transition-all"
+                  >
+                    <option value="">Selecciona</option>
+                    {currentQuestion.options.map((option, idx) => (
+                      <option key={idx} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               ))}
             </div>
           </div>
 
           <button
             onClick={handleSubmit}
-            disabled={selectedOption === null}
+            disabled={selectedValues.some((value) => !value)}
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all disabled:bg-gray-400"
           >
             Siguiente
