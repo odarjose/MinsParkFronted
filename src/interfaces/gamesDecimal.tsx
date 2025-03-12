@@ -13,8 +13,9 @@ export interface QuestionGameDecimalLevel2 {
 }
 
 export interface QuestionGameDecimalLevel3 {
-  type: "multiple-choice";
+  type: "table-positioning";
   question: string; // Texto de la pregunta
-  options: string[]; // Opciones de respuesta
-  correctAnswer: string; // Respuesta correcta
+  positions: string[]; // Nombres de las posiciones (Millones, Centenas de mil, etc.)
+  options: string[]; // Dígitos disponibles para seleccionar
+  correctAnswer: string[]; // Respuesta correcta para cada posició
 }
