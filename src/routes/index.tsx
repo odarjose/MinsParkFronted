@@ -22,6 +22,10 @@ import MultiplicationGameLevel2 from "@/pages/LevelsMultiply/GamesMultiply/games
 import MultiplicationGameLevel3 from "@/pages/LevelsMultiply/GamesMultiply/gamesMultiplyLevel3";
 
 import DecimalSystemGameLevel1 from "@/pages/LevelSystemDecimal/GameSystemDecimal/gameSystemDecimalLevel1";
+import DecimalSystemGameLevel2 from "@/pages/LevelSystemDecimal/GameSystemDecimal/gameSystemDecimalLevel2";
+import DecimalSystemGameLevel3 from "@/pages/LevelSystemDecimal/GameSystemDecimal/gameSystemDecimalLevel3";
+
+import LoginPage from "@/pages/Login/LoginPage";
 
 const AppRoutes = () => {
   return (
@@ -40,10 +44,32 @@ const AppRoutes = () => {
         <Route path="games/division/1" element={<DivisionGame />} />
         <Route path="games/division/2" element={<DivisionGameLevel2 />} />
         <Route path="games/division/3" element={<DivisionGameLevel3 />} />
-        <Route path="games/multiplication/1" element={<MultiplicationGameLevel1 />} />
-        <Route path="games/multiplication/2" element={<MultiplicationGameLevel2 />} />
-        <Route path="games/multiplication/3" element={<MultiplicationGameLevel3 />} />
-        <Route path="games/decimal-system/1" element={<DecimalSystemGameLevel1 />} />
+        <Route
+          path="games/multiplication/1"
+          element={<MultiplicationGameLevel1 />}
+        />
+        <Route
+          path="games/multiplication/2"
+          element={<MultiplicationGameLevel2 />}
+        />
+        <Route
+          path="games/multiplication/3"
+          element={<MultiplicationGameLevel3 />}
+        />
+        <Route
+          path="games/decimal-system/1"
+          element={<DecimalSystemGameLevel1 />}
+        />
+        <Route
+          path="games/decimal-system/2"
+          element={<DecimalSystemGameLevel2 />}
+        />
+        <Route
+          path="games/decimal-system/3"
+          element={<DecimalSystemGameLevel3 />}
+        />
+
+        <Route path="login" element={<LoginPage />} />
       </Route>
     </Routes>
   );

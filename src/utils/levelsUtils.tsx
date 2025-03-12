@@ -118,7 +118,7 @@ export const levelsDecimalSystem: LevelsUtilsProps[] = [
       "En el sistema decimal, cada dígito tiene un valor que depende de su posición en el número. En este ejercicio, identificarás el valor de un dígito específico en diferentes números.",
     icon: <Divide className="h-8 w-8" />,
     color: "from-blue-400 to-blue-500",
-    route: "/math/level/2",
+    route: "/games/decimal-system/2",
   },
   {
     id: 3,
@@ -127,6 +127,6 @@ export const levelsDecimalSystem: LevelsUtilsProps[] = [
       "En el sistema decimal, cada dígito tiene un valor que depende de su posición. En este ejercicio, completarás la descomposición de números y los ubicarás en tablas posicionales.",
     icon: <Functions className="h-8 w-8" />,
     color: "from-purple-400 to-purple-500",
-    route: "/math/level/3",
+    route: "/games/decimal-system/3",
   },
 ];
