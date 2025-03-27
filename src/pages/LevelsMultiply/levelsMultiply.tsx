@@ -11,6 +11,8 @@ export function LevelsMultiply() {
       <LevelsComponents
         title="Cada problema resuelto es un paso más hacia el éxito. ¡Confía en ti, piensa con lógica y verás que las matemáticas son más fáciles de lo que parecen!"
         levels={levelsMultiplication}
+        backPath="/multiply/image" // Ruta para "Volver a Inicio"
+        nextPath="/"
       />
     </VideoGate>
   );

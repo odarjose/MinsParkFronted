@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-
+import { useNavigate } from "react-router-dom";
 import { QuestionMultiplyLevel3 } from "@/interfaces/gamesMultiplyInterface";
 
 const MultiplicationGameLevel3: React.FC = () => {
@@ -10,23 +10,48 @@ const MultiplicationGameLevel3: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
+
+  const navigate = useNavigate();
 
   const questions: QuestionMultiplyLevel3[] = [
     {
       type: "multiple-choice",
       question:
         "Un teatro tiene 24 filas de asientos, y en cada fila hay 38 asientos. ¿Cuántos asientos hay en total?",
-      options: [912, 812, 796],
+      options: [912, 812, 796, 489],
       correctAnswer: 912,
     },
     {
       type: "multiple-choice",
       question:
         "Pedro compró 3 paquetes de galletas. Cada paquete tiene 6 galletas. ¿Cuántas galletas tiene en total?",
-      options: [12, 18, 24],
+      options: [12, 18, 24, 15],
       correctAnswer: 18,
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Un cine tiene 15 filas de asientos y en cada fila hay 20 asientos. Si todas las filas están llenas, ¿cuántas personas hay en el cine?",
+      options: [120, 250, 300, 200],
+      correctAnswer: 300,
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "En una librería hay 24 estantes. En cada estante hay 18 libros. ¿Cuántos libros hay en total?",
+      options: [423, 432, 234, 342],
+      correctAnswer: 432,
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Una maestra tiene 5 paquetes de cuadernos. Cada paquete tiene 8 cuadernos. ¿Cuántos cuadernos tiene en total?",
+      options: [20, 40, 30, 42],
+      correctAnswer: 40,
     },
   ];
 
@@ -46,7 +71,7 @@ const MultiplicationGameLevel3: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -76,12 +101,20 @@ const MultiplicationGameLevel3: React.FC = () => {
             Respuestas Correctas: {correctAnswers} | Respuestas Incorrectas:{" "}
             {incorrectAnswers}
           </p>
-          <button
-            onClick={restartGame}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
-          >
-            Jugar de Nuevo
-          </button>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={restartGame}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
+            >
+              Jugar de Nuevo
+            </button>
+            <button
+              onClick={() => navigate("levels/multiplication")} 
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
+            >
+              Ir a otra sección
+            </button>
+          </div>
           <Sparkles className="absolute top-0 right-0 w-16 h-16 text-yellow-400 animate-spin" />
         </div>
       </div>
@@ -115,7 +148,7 @@ const MultiplicationGameLevel3: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Multiplicación Fun: Nivel 3
+              Multiplicación Fun!
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
@@ -134,8 +167,7 @@ const MultiplicationGameLevel3: React.FC = () => {
                     }
                   `}
                 >
-                  {option.toLocaleString()}{" "}
-                  {/* Formatear números grandes con comas */}
+                  {option}
                 </button>
               ))}
             </div>

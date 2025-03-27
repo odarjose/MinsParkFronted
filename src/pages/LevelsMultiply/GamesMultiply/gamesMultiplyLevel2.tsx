@@ -10,41 +10,66 @@ const MultiplicationGameLevel2: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [userInput, setUserInput] = useState<string>(""); // Para respuestas de tipo input
+  const [userInput, setUserInput] = useState<string>(""); // Respuesta del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
   const questions: QuestionMultiplyLevel2[] = [
     {
       type: "input",
-      question: "24 × ____ = 72",
-      correctAnswer: 3,
+      question: "Completa la siguiente multiplicación: 24 × ____ = 72",
+      correctAnswer: "3",
     },
     {
       type: "input",
-      question: "____ × 5 = 75",
-      correctAnswer: 15,
+      question: "Completa la siguiente multiplicación: ____ × 5 = 75",
+      correctAnswer: "15",
     },
     {
       type: "input",
-      question: "32 × 2 = ____",
-      correctAnswer: 64,
+      question: "Completa la siguiente multiplicación: 32 × 2 = ____",
+      correctAnswer: "64",
     },
     {
       type: "input",
-      question: "____ × 4 = 164",
-      correctAnswer: 41,
+      question: "Completa la siguiente multiplicación: ____ × 4 = 164",
+      correctAnswer: "41",
     },
     {
       type: "input",
-      question: "12 × ____ = 72",
-      correctAnswer: 6,
+      question: "Completa la siguiente multiplicación: 12 × ____ = 72",
+      correctAnswer: "6",
+    },
+    {
+      type: "input",
+      question: "Completa la siguiente multiplicación: 11 × 2 = ____",
+      correctAnswer: "22",
+    },
+    {
+      type: "input",
+      question: "Completa la siguiente multiplicación: ___ × 9 = 72",
+      correctAnswer: "8",
+    },
+    {
+      type: "input",
+      question: "Completa la siguiente multiplicación: 12 × ____ = 84",
+      correctAnswer: "7",
+    },
+    {
+      type: "input",
+      question: "Completa la siguiente multiplicación: _____ × 4 = 44",
+      correctAnswer: "11",
+    },
+    {
+      type: "input",
+      question: "Completa la siguiente multiplicación: 125 × ____ = 375",
+      correctAnswer: "3",
     },
   ];
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setUserInput(""); // Resetear el input para la siguiente pregunta
+      setUserInput(""); // Resetear la entrada para la siguiente pregunta
     } else {
       setShowSummary(true);
     }
@@ -53,11 +78,11 @@ const MultiplicationGameLevel2: React.FC = () => {
   const handleSubmit = () => {
     const currentQuestion = questions[currentQuestionIndex];
 
-    if (Number(userInput) === currentQuestion.correctAnswer) {
+    if (userInput.trim() === String(currentQuestion.correctAnswer)) {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -76,7 +101,7 @@ const MultiplicationGameLevel2: React.FC = () => {
 
   if (showSummary) {
     return (
-      <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br bg-pink-50  flex items-center justify-center p-4">
         <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full text-center relative">
           <Trophy className="text-yellow-500 mx-auto mb-4 w-16 h-16 animate-bounce" />
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -126,7 +151,7 @@ const MultiplicationGameLevel2: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Multiplicación Fun: Nivel 2
+              Multiplicación Fun!
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
@@ -136,7 +161,7 @@ const MultiplicationGameLevel2: React.FC = () => {
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               placeholder="Escribe tu respuesta aquí"
-              className="p-4 rounded-lg text-xl font-bold w-full border-2 border-indigo-300 focus:border-indigo-500 transition-all"
+              className="p-4 rounded-lg text-xl font-bold w-full border-2 border-indigo-300 focus:border-indigo-500 transition-all mb-4"
             />
           </div>
 

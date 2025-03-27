@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-import { QuestionGameDecimalLevel1 } from "@/interfaces/gamesDecimal";
+import { QuestionLevel1 } from "@/interfaces/gamesDecimal";
 
-
-const DecimalSystemGame: React.FC = () => {
+const DecompositionGameLevel1: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const questions: QuestionGameDecimalLevel1[] = [
+  const questions: QuestionLevel1[] = [
     {
       type: "multiple-choice",
       question: "Descompón el número 47,306 en su forma extendida.",
@@ -34,6 +35,53 @@ const DecimalSystemGame: React.FC = () => {
       ],
       correctAnswer: "60,000 + 2,000 + 100 + 50 + 4",
     },
+    {
+      type: "multiple-choice",
+      question: "Descompón el número 306 en su forma extendida.",
+      options: ["3,000 + 6000 + 0 + 6", "300 + 0 + 6", "300 + 10 + 6"],
+      correctAnswer: "300 + 0 + 6",
+    },
+    {
+      type: "multiple-choice",
+      question: "Descompón el número 25,253,024 en su forma extendida.",
+      options: [
+        "20,000,000 + 5,000,000 + 200,000 + 50,000 + 3,000 + 0 + 20 + 4",
+        "200,000,000 + 50,000,000 + 200,000 + 500 + 30 + 0",
+        "20,000,000 + 3,000,000 + 500,000 + 30,000 + 2,000 + 0 + 30 + 4",
+        "20,000,000 + 5,000,000 + 200,000 + 50,000 + 3,000 + 0 + 20 + 4",
+      ],
+      correctAnswer:
+        "20,000,000 + 5,000,000 + 200,000 + 50,000 + 3,000 + 0 + 20 + 4",
+    },
+    {
+      type: "multiple-choice",
+      question: "Descompón el número 2,356 en su forma extendida.",
+      options: [
+        "200 + 300 + 50 + 6",
+        "20,000 + 3,000 + 500 + 60 + 6",
+        "20,000,000 + 3,000 + 50 + 6",
+        "2,000 + 300 + 50 + 6",
+      ],
+      correctAnswer: "2,000 + 300 + 50 + 6",
+    },
+    {
+      type: "multiple-choice",
+      question: "Descompón el número 52 en su forma extendida.",
+      options: ["500 + 0 + 2", "50 + 2", "3"],
+      correctAnswer: "50 + 2",
+    },
+    {
+      type: "multiple-choice",
+      question: "Descompón el número 89,250,360 en su forma extendida.",
+      options: [
+        "80,000,000 + 9,000,000 + 200,000 + 50,000 + 0 + 300 + 60 + 0",
+        "800,000,000 + 90,000,000 + 2,000,000 + 500 + 30 + 0 + 6",
+        "80,000,000 + 3,000,000 + 500,000 + 30,000 + 2,000 + 0 + 30 + 4",
+        "80,000,000 + 9,000,000 + 200,000 + 50,000 + 300 + 60 + 0",
+      ],
+      correctAnswer:
+        "80,000,000 + 9,000,000 + 200,000 + 50,000 + 0 + 300 + 60 + 0",
+    },
   ];
 
   const handleNextQuestion = () => {
@@ -52,7 +100,7 @@ const DecimalSystemGame: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -121,18 +169,18 @@ const DecimalSystemGame: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Sistema Decimal Fun: Nivel 1
+              Descomposición Numérica Fun!
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
-            <div className="grid grid-cols-1 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               {currentQuestion.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedOption(option)}
                   className={`
-                    p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
+                    p-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105
                     ${
                       selectedOption === option
                         ? "bg-yellow-500 text-white"
@@ -159,4 +207,4 @@ const DecimalSystemGame: React.FC = () => {
   );
 };
 
-export default DecimalSystemGame;
+export default DecompositionGameLevel1;

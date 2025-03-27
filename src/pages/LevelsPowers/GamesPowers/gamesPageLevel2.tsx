@@ -1,39 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
 
-interface MatchingPair {
-  power: string; // Ejemplo: "3^3"
-  result: number; // Ejemplo: 27
-}
-
 interface Question {
-  type: "matching" | "multiple-choice";
-  question?: string; // Solo para selección múltiple
-  pairs?: MatchingPair[]; // Solo para preguntas de tipo "matching"
-  options?: (number | string)[]; // Solo para selección múltiple
-  correctAnswer?: number | string; // Respuesta correcta
+  type: "multi-potencia" | "image-multiple-choice"; // Tipo de pregunta
+  question?: string; // Texto de la pregunta (opcional)
+  image?: string; // URL de la imagen (opcional)
+  options?: (string | number)[]; // Opciones de respuesta
+  correctAnswer?: string | number; // Respuesta correcta
+  potencias?: { power: string; result: number }[]; // Para preguntas con múltiples potencias
 }
 
-const PowerGameLevel2: React.FC = () => {
+const PowerGameMedium: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | string | null>(
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
     null
-  ); // Para selección múltiple
+  ); // Selección del usuario
   const [matchedPairs, setMatchedPairs] = useState<
     { power: string; result: number | null }[]
-  >([]); // Para "matching"
+  >([]); // Para la primera pregunta
   const [showConfetti, setShowConfetti] = useState(false);
 
   const questions: Question[] = [
-    // Juego 1: Une las potencias con sus resultados
+    // Pregunta 1: Selecciona la respuesta correcta de cada potencia
     {
-      type: "matching",
-      pairs: [
+      type: "multi-potencia",
+      question: "Selecciona la respuesta correcta de cada potencia:",
+      potencias: [
         { power: "3³", result: 27 },
         { power: "2⁴", result: 16 },
         { power: "5³", result: 125 },
@@ -41,36 +38,70 @@ const PowerGameLevel2: React.FC = () => {
         { power: "9²", result: 81 },
       ],
     },
-    // Juego 2: Selección múltiple
+    // Pregunta 2: Imagen + selección múltiple
     {
-      type: "multiple-choice",
-      question:
-        "¿Cuál es la potencia que representa la multiplicación? 🔹 2 × 2 × 2 × 2 × 2 =",
-      options: ["2⁴", "2⁵", "2⁶"],
-      correctAnswer: "2⁵",
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP2.png", // Reemplaza con la ruta real de la imagen
+      options: [6, 4, 9, 8],
+      correctAnswer: 8,
     },
+    // Pregunta 3: Imagen + selección múltiple
     {
-      type: "multiple-choice",
-      question:
-        "¿Cuál es la potencia que representa la multiplicación? 🔹 9 × 9 × 9 × 9 × 9 × 9 =",
-      options: ["9⁸", "9⁶", "9⁹"],
-      correctAnswer: "9⁶",
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP3.png", // Reemplaza con la ruta real de la imagen
+      options: [64, 75, 12, 65],
+      correctAnswer: 64,
     },
+    // Pregunta 4: Imagen + selección múltiple
     {
-      type: "multiple-choice",
-      question:
-        "¿Cuál es la potencia que representa la multiplicación? 🔹 7 × 7 × 7 =",
-      options: ["7²", "7³", "7⁵"],
-      correctAnswer: "7³",
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP4.png", // Reemplaza con la ruta real de la imagen
+      options: [78, 80, 91, 81],
+      correctAnswer: 81,
+    },
+    // Pregunta 5: Imagen + selección múltiple
+    {
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP5.png", // Reemplaza con la ruta real de la imagen
+      options: [125, 25, 725, 625],
+      correctAnswer: 125,
+    },
+    // Pregunta 6: Imagen + selección múltiple
+    {
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP6.png", // Reemplaza con la ruta real de la imagen
+      options: [1, 0, 2, 9],
+      correctAnswer: 1,
+    },
+    // Pregunta 7: Imagen + selección múltiple
+    {
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP7.png", // Reemplaza con la ruta real de la imagen
+      options: [10, 0, 2, 100],
+      correctAnswer: 100,
+    },
+    // Pregunta 8: Imagen + selección múltiple
+    {
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENP8.png", // Reemplaza con la ruta real de la imagen
+      options: [1, 0, 22, 2],
+      correctAnswer: 1,
     },
   ];
 
   useEffect(() => {
     const currentQuestion = questions[currentQuestionIndex];
-    if (currentQuestion.type === "matching") {
+    if (currentQuestion.type === "multi-potencia") {
       // Inicializar matchedPairs con todas las potencias y resultados en null
       setMatchedPairs(
-        currentQuestion.pairs?.map((pair) => ({
+        currentQuestion.potencias?.map((pair) => ({
           power: pair.power,
           result: null, // Resultado inicialmente nulo
         })) || []
@@ -91,11 +122,11 @@ const PowerGameLevel2: React.FC = () => {
   const handleSubmit = () => {
     const currentQuestion = questions[currentQuestionIndex];
 
-    if (currentQuestion.type === "matching") {
+    if (currentQuestion.type === "multi-potencia") {
       const allCorrect = matchedPairs.every(
         (pair) =>
-          currentQuestion.pairs?.find((p) => p.power === pair.power)?.result ===
-          pair.result
+          currentQuestion.potencias?.find((p) => p.power === pair.power)
+            ?.result === pair.result
       );
       if (allCorrect) {
         setScore(score + 100);
@@ -105,7 +136,7 @@ const PowerGameLevel2: React.FC = () => {
       } else {
         setIncorrectAnswers(incorrectAnswers + 1);
       }
-    } else if (currentQuestion.type === "multiple-choice") {
+    } else if (currentQuestion.type === "image-multiple-choice") {
       if (selectedOption === currentQuestion.correctAnswer) {
         setScore(score + 100);
         setCorrectAnswers(correctAnswers + 1);
@@ -135,7 +166,7 @@ const PowerGameLevel2: React.FC = () => {
         <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full text-center relative">
           <Trophy className="text-yellow-500 mx-auto mb-4 w-16 h-16 animate-bounce" />
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            ¡Juego Terminado! 
+            ¡Juego Terminado!
           </h1>
           <p className="text-xl text-gray-600 mb-2">Puntaje Total: {score}</p>
           <p className="text-lg text-gray-600 mb-4">
@@ -180,16 +211,14 @@ const PowerGameLevel2: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Potencia Fun!
-            </h1>
-            {currentQuestion.type === "matching" ? (
+            
+            {currentQuestion.type === "multi-potencia" ? (
               <>
                 <p className="text-xl text-gray-600 mb-2">
-                  Une cada potencia con su resultado:
+                  {currentQuestion.question}
                 </p>
                 <div className="grid grid-cols-2 gap-4 mb-4">
-                  {currentQuestion.pairs?.map((pair, index) => (
+                  {currentQuestion.potencias?.map((pair, index) => (
                     <div key={index} className="flex flex-col items-center">
                       <p className="text-lg font-bold">{pair.power}</p>
                       <select
@@ -209,7 +238,7 @@ const PowerGameLevel2: React.FC = () => {
                         className="p-2 rounded-lg border-2 border-indigo-300 focus:border-indigo-500 transition-all"
                       >
                         <option value="">Selecciona un resultado</option>
-                        {currentQuestion.pairs?.map((p, idx) => (
+                        {currentQuestion.potencias?.map((p, idx) => (
                           <option key={idx} value={p.result}>
                             {p.result}
                           </option>
@@ -224,6 +253,14 @@ const PowerGameLevel2: React.FC = () => {
                 <p className="text-xl text-gray-600 mb-2">
                   {currentQuestion.question}
                 </p>
+                {currentQuestion.image && (
+                  <img
+                    src={currentQuestion.image}
+                    alt="Potencia"
+                    className="mx-auto mb-4 rounded-lg border-2 border-indigo-300"
+                    style={{ width: "150px", height: "150px" }}
+                  />
+                )}
                 <div className="grid grid-cols-2 gap-4 mb-8">
                   {currentQuestion.options?.map((option, index) => (
                     <button
@@ -249,9 +286,9 @@ const PowerGameLevel2: React.FC = () => {
           <button
             onClick={handleSubmit}
             disabled={
-              (currentQuestion.type === "matching" &&
+              (currentQuestion.type === "multi-potencia" &&
                 matchedPairs.some((mp) => mp.result === null)) ||
-              (currentQuestion.type === "multiple-choice" &&
+              (currentQuestion.type === "image-multiple-choice" &&
                 selectedOption === null)
             }
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all disabled:bg-gray-400"
@@ -264,4 +301,4 @@ const PowerGameLevel2: React.FC = () => {
   );
 };
 
-export default PowerGameLevel2;
+export default PowerGameMedium;

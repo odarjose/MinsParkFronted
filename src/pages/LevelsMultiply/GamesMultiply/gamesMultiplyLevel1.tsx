@@ -9,27 +9,71 @@ const MultiplicationGameLevel1: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
   const questions: QuestionMultiplyLevel1[] = [
     {
       type: "multiple-choice",
-      question: "125 × ____ = 500",
-      options: [2, 3, 4],
-      correctAnswer: 4,
+      question: "125 × 2 =",
+      options: [150, 320, 250, 650],
+      correctAnswer: 250,
     },
     {
       type: "multiple-choice",
       question: "236 × 5 = ____",
-      options: [1180, 1280, 1380],
+      options: [1180, 1280, 1380, 1956],
       correctAnswer: 1180,
     },
     {
       type: "multiple-choice",
       question: "____ × 3 = 1,026",
-      options: [342, 352, 362],
+      options: [342, 352, 362, 256],
       correctAnswer: 342,
+    },
+    {
+      type: "multiple-choice",
+      question: "152 × 12 =",
+      options: [1724, 1824, 1834, 1838],
+      correctAnswer: 1824,
+    },
+    {
+      type: "multiple-choice",
+      question: "____ × 5 = 1125",
+      options: [225, 125, 325, 235],
+      correctAnswer: 225,
+    },
+    {
+      type: "multiple-choice",
+      question: "24 × ____ = 72",
+      options: [3, 13, 4, 6],
+      correctAnswer: 3,
+    },
+    {
+      type: "multiple-choice",
+      question: "5 × ____ = 75",
+      options: [5, 15, 25, 35],
+      correctAnswer: 15,
+    },
+    {
+      type: "multiple-choice",
+      question: "12 × 12 =",
+      options: [142, 144, 132, 143],
+      correctAnswer: 144,
+    },
+    {
+      type: "multiple-choice",
+      question: "8 × __ = 72",
+      options: [4, 5, 9, 8],
+      correctAnswer: 9,
+    },
+    {
+      type: "multiple-choice",
+      question: "9 × 7 =",
+      options: [42, 73, 63, 83],
+      correctAnswer: 63,
     },
   ];
 
@@ -49,7 +93,7 @@ const MultiplicationGameLevel1: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -117,9 +161,7 @@ const MultiplicationGameLevel1: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Multiplicación Fun: Nivel 1
-            </h1>
+            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
@@ -137,8 +179,7 @@ const MultiplicationGameLevel1: React.FC = () => {
                     }
                   `}
                 >
-                  {option.toLocaleString()}{" "}
-                  {/* Formatear números grandes con comas */}
+                  {option}
                 </button>
               ))}
             </div>

@@ -1,41 +1,82 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-import { QuestionDivisionLevel1 } from "@/interfaces/gamesDivisionInterface";
+import { Question } from "@/interfaces/gamesDivisionInterface";
 
-const DivisionGame: React.FC = () => {
+const DivisionGameLevel1: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const questions: QuestionDivisionLevel1[] = [
+  const questions: Question[] = [
     {
-      type: "multiple-choice",
-      question: "D=83, d=9, q=9, r=____",
-      options: [2, 3, 4, 5],
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN1.png", 
+      options: [4, 5, 2, 3],
       correctAnswer: 2,
     },
     {
-      type: "multiple-choice",
-      question: "D=102, r=10, q=23, d=____",
-      options: [4, 5, 6, 7],
-      correctAnswer: 4,
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN2.png", 
+      options: [5, 15, 25, 12],
+      correctAnswer: 5,
     },
     {
-      type: "multiple-choice",
-      question: "d=8, r=3, q=11, D=____",
-      options: [88, 91, 94, 97],
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN3.png", 
+      options: [56, 78, 91, 92],
       correctAnswer: 91,
     },
     {
-      type: "multiple-choice",
-      question: "D=215, d=12, r=____, q=17",
-      options: [8, 9, 10, 11],
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN4.png", 
+      options: [11, 10, 41, 51],
       correctAnswer: 11,
+    },
+    {
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN5.png", 
+      options: [348, 244, 144, 258],
+      correctAnswer: 348,
+    },
+    {
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN6.png", 
+      options: [15, 25, 125, 5],
+      correctAnswer: 5,
+    },
+    {
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN7.png", 
+      options: [4, 0, 1, 2],
+      correctAnswer: 0,
+    },
+    {
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN8.png", 
+      options: [4, 12, 8, 2],
+      correctAnswer: 4,
+    },
+    {
+      type: "image-multiple-choice",
+      question: "Selecciona el valor de la parte faltante de la división:",
+      image: "/EDN9.png", 
+      options: [135, 125, 124, 136],
+      correctAnswer: 135,
     },
   ];
 
@@ -55,7 +96,7 @@ const DivisionGame: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -123,12 +164,16 @@ const DivisionGame: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              División Fun: Nivel 1
-            </h1>
+            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
+            <img
+              src={currentQuestion.image}
+              alt="División"
+              className="mx-auto mb-4 rounded-lg border-2 border-indigo-300"
+              style={{ width: "150px", height: "150px" }}
+            />
             <div className="grid grid-cols-2 gap-4 mb-8">
               {currentQuestion.options.map((option, index) => (
                 <button
@@ -162,4 +207,4 @@ const DivisionGame: React.FC = () => {
   );
 };
 
-export default DivisionGame;
+export default DivisionGameLevel1;

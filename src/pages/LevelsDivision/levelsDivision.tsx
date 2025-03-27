@@ -11,6 +11,8 @@ export function LevelsDivision() {
       <LevelsComponents
         title="¡Que comience la diversión con los números! Demuestra tu ingenio, resuelve con precisión y ¡a conquistar cada división! ¡Vamos!"
         levels={levelsDivision}
+        backPath="/division/image" // Ruta para "Volver a Inicio"
+        nextPath="/"
       />
     </VideoGate>
   );

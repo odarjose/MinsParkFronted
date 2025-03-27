@@ -25,51 +25,67 @@ import DecimalSystemGameLevel1 from "@/pages/LevelSystemDecimal/GameSystemDecima
 import DecimalSystemGameLevel2 from "@/pages/LevelSystemDecimal/GameSystemDecimal/gameSystemDecimalLevel2";
 import DecimalSystemGameLevel3 from "@/pages/LevelSystemDecimal/GameSystemDecimal/gameSystemDecimalLevel3";
 
-import LoginPage from "@/pages/Login/LoginPage";
+import Onesept from "@/pages/LevelSystemDecimal/Onesept";
+import OneseptMultiply from "@/pages/LevelsMultiply/OneStep";
+import OneStepDivision from "@/pages/LevelsDivision/OneSptep";
+
+import OneseptPowers from "@/pages/LevelsPowers/OneStep";
+
+import Login from "@/pages/Login/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="progress" element={<ProgressPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="levels/powers" element={<LevelsPowers />} />
-        <Route path="levels/division" element={<LevelsDivision />} />
-        <Route path="levels/multiplication" element={<LevelsMultiply />} />
-        <Route path="levels/decimal-system" element={<LevelsDecimalSystem />} />
-        <Route path="games/1" element={<GamesPage />} />
-        <Route path="games/2" element={<PowerGameLevel2 />} />
-        <Route path="games/3" element={<PowerGameLevel3 />} />
-        <Route path="games/division/1" element={<DivisionGame />} />
-        <Route path="games/division/2" element={<DivisionGameLevel2 />} />
-        <Route path="games/division/3" element={<DivisionGameLevel3 />} />
-        <Route
-          path="games/multiplication/1"
-          element={<MultiplicationGameLevel1 />}
-        />
-        <Route
-          path="games/multiplication/2"
-          element={<MultiplicationGameLevel2 />}
-        />
-        <Route
-          path="games/multiplication/3"
-          element={<MultiplicationGameLevel3 />}
-        />
-        <Route
-          path="games/decimal-system/1"
-          element={<DecimalSystemGameLevel1 />}
-        />
-        <Route
-          path="games/decimal-system/2"
-          element={<DecimalSystemGameLevel2 />}
-        />
-        <Route
-          path="games/decimal-system/3"
-          element={<DecimalSystemGameLevel3 />}
-        />
+      <Route path="/login" element={<Login />} />
 
-        <Route path="login" element={<LoginPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="progress" element={<ProgressPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="levels/powers" element={<LevelsPowers />} />
+          <Route path="levels/division" element={<LevelsDivision />} />
+          <Route path="levels/multiplication" element={<LevelsMultiply />} />
+          <Route
+            path="levels/decimal-system"
+            element={<LevelsDecimalSystem />}
+          />
+          <Route path="games/1" element={<GamesPage />} />
+          <Route path="games/2" element={<PowerGameLevel2 />} />
+          <Route path="games/3" element={<PowerGameLevel3 />} />
+          <Route path="games/division/1" element={<DivisionGame />} />
+          <Route path="games/division/2" element={<DivisionGameLevel2 />} />
+          <Route path="games/division/3" element={<DivisionGameLevel3 />} />
+          <Route
+            path="games/multiplication/1"
+            element={<MultiplicationGameLevel1 />}
+          />
+          <Route
+            path="games/multiplication/2"
+            element={<MultiplicationGameLevel2 />}
+          />
+          <Route
+            path="games/multiplication/3"
+            element={<MultiplicationGameLevel3 />}
+          />
+          <Route
+            path="games/decimal-system/1"
+            element={<DecimalSystemGameLevel1 />}
+          />
+          <Route
+            path="games/decimal-system/2"
+            element={<DecimalSystemGameLevel2 />}
+          />
+          <Route
+            path="games/decimal-system/3"
+            element={<DecimalSystemGameLevel3 />}
+          />
+          <Route path="decimal/image" element={<Onesept />} />
+          <Route path="multiply/image" element={<OneseptMultiply />} />
+          <Route path="division/image" element={<OneStepDivision />} />
+          <Route path="potencia/image" element={<OneseptPowers />} />
+        </Route>
       </Route>
     </Routes>
   );

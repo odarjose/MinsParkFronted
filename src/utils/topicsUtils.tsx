@@ -17,7 +17,7 @@ export const topics: Topic[] = [
     description: "Descubre el poder de los numeros",
     icon: <Calculator className="w-8 h-8 text-purple-500" />,
     difficulty: "Facil",
-    path: "levels/decimal-system",
+    path: "decimal/image",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const topics: Topic[] = [
     description: "¡Multiplica tus conocimientos!",
     icon: <Layers className="w-8 h-8 text-blue-500" />,
     difficulty: "Medio",
-    path: "levels/multiplication",
+    path: "multiply/image",
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ export const topics: Topic[] = [
     description: "¡Divide y conquista!",
     icon: <PieChart className="w-8 h-8 text-yellow-500" />,
     difficulty: "Fuerte",
-    path: "levels/division",
+    path: "division/image",
   },
   {
     id: 4,
@@ -41,6 +41,6 @@ export const topics: Topic[] = [
     description: "¡Eleva tu aprendizaje al máximo!",
     icon: <Flame className="w-8 h-8 text-red-500" />,
     difficulty: "Fuerte",
-    path: "/levels/powers",
+    path: "potencia/image",
   },
 ];
