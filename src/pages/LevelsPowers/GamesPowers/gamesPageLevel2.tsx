@@ -18,7 +18,7 @@ const PowerGameMedium: React.FC = () => {
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | number | null>(
-    null
+    null,
   ); // Selección del usuario
   const [matchedPairs, setMatchedPairs] = useState<
     { power: string; result: number | null }[]
@@ -68,7 +68,7 @@ const PowerGameMedium: React.FC = () => {
       question: "¿Cuál es el resultado de la potencia?",
       image: "/ENP5.png", // Reemplaza con la ruta real de la imagen
       options: [125, 25, 725, 625],
-      correctAnswer: 125,
+      correctAnswer: 625,
     },
     // Pregunta 6: Imagen + selección múltiple
     {
@@ -84,7 +84,7 @@ const PowerGameMedium: React.FC = () => {
       question: "¿Cuál es el resultado de la potencia?",
       image: "/ENP7.png", // Reemplaza con la ruta real de la imagen
       options: [10, 0, 2, 100],
-      correctAnswer: 100,
+      correctAnswer: 10,
     },
     // Pregunta 8: Imagen + selección múltiple
     {
@@ -104,7 +104,7 @@ const PowerGameMedium: React.FC = () => {
         currentQuestion.potencias?.map((pair) => ({
           power: pair.power,
           result: null, // Resultado inicialmente nulo
-        })) || []
+        })) || [],
       );
     }
   }, [currentQuestionIndex]);
@@ -126,7 +126,7 @@ const PowerGameMedium: React.FC = () => {
       const allCorrect = matchedPairs.every(
         (pair) =>
           currentQuestion.potencias?.find((p) => p.power === pair.power)
-            ?.result === pair.result
+            ?.result === pair.result,
       );
       if (allCorrect) {
         setScore(score + 100);
@@ -211,7 +211,6 @@ const PowerGameMedium: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            
             {currentQuestion.type === "multi-potencia" ? (
               <>
                 <p className="text-xl text-gray-600 mb-2">
@@ -231,8 +230,8 @@ const PowerGameMedium: React.FC = () => {
                             prev.map((mp) =>
                               mp.power === pair.power
                                 ? { ...mp, result: Number(e.target.value) }
-                                : mp
-                            )
+                                : mp,
+                            ),
                           )
                         }
                         className="p-2 rounded-lg border-2 border-indigo-300 focus:border-indigo-500 transition-all"

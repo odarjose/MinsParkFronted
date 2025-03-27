@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
+import { useNavigate } from "react-router-dom";
 
 interface Question {
   type: "input" | "multiple-choice" | "ordering" | "image-multiple-choice"; // Tipo de pregunta
@@ -18,13 +19,14 @@ const PowerGameHard: React.FC = () => {
   const [showSummary, setShowSummary] = useState(false);
   const [userInput, setUserInput] = useState<string>(""); // Para preguntas de tipo input
   const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
-    []
+    [],
   ); // Para selección múltiple
   const [orderedOptions, setOrderedOptions] = useState<(string | number)[]>([]); // Para ordenar potencias
   const [selectedOption, setSelectedOption] = useState<string | number | null>(
-    null
+    null,
   ); // Para selección única
   const [showConfetti, setShowConfetti] = useState(false);
+  const navigate = useNavigate();
 
   const questions: Question[] = [
     // Pregunta 1: Completar el resultado de la potencia
@@ -82,7 +84,7 @@ const PowerGameHard: React.FC = () => {
       question: "¿Cuál es el resultado de la potencia?",
       image: "/ENPN5.png", // Reemplaza con la ruta real de la imagen
       options: [0, 30, 1, 32],
-      correctAnswer: 1,
+      correctAnswer: 30,
     },
   ];
 
@@ -116,7 +118,7 @@ const PowerGameHard: React.FC = () => {
         | number
       )[];
       const allCorrect = selectedOptions.every((option) =>
-        correctAnswerArray.includes(option)
+        correctAnswerArray.includes(option),
       );
       if (allCorrect) {
         setScore(score + 100);
@@ -177,12 +179,20 @@ const PowerGameHard: React.FC = () => {
             Respuestas Correctas: {correctAnswers} | Respuestas Incorrectas:{" "}
             {incorrectAnswers}
           </p>
-          <button
-            onClick={restartGame}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
-          >
-            Jugar de Nuevo
-          </button>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={restartGame}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
+            >
+              Jugar de Nuevo
+            </button>
+            <button
+              onClick={() => navigate("levels/powers")} // Usa navigate en lugar de <a>
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
+            >
+              Ir a otra sección
+            </button>
+          </div>
           <Sparkles className="absolute top-0 right-0 w-16 h-16 text-yellow-400 animate-spin" />
         </div>
       </div>
@@ -244,7 +254,7 @@ const PowerGameHard: React.FC = () => {
                         setSelectedOptions((prev) =>
                           prev.includes(option)
                             ? prev.filter((item) => item !== option)
-                            : [...prev, option]
+                            : [...prev, option],
                         )
                       }
                       className={`
@@ -274,7 +284,7 @@ const PowerGameHard: React.FC = () => {
                         setOrderedOptions((prev) =>
                           prev.includes(option)
                             ? prev.filter((item) => item !== option)
-                            : [...prev, option]
+                            : [...prev, option],
                         )
                       }
                       className={`

@@ -11,7 +11,7 @@ const DivisionGameLevel3: React.FC = () => {
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | number | null>(
-    null
+    null,
   ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ const DivisionGameLevel3: React.FC = () => {
               Jugar de Nuevo
             </button>
             <button
-              onClick={() => navigate("levels/powers")} // Usa navigate en lugar de <a>
+              onClick={() => navigate("levels/division")} // Usa navigate en lugar de <a>
               className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
             >
               Ir a otra sección
@@ -147,7 +147,6 @@ const DivisionGameLevel3: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
