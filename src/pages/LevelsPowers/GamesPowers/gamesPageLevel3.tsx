@@ -2,53 +2,87 @@ import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
 
-import { Question } from "@/interfaces/levelsIneterfaces";
+interface Question {
+  type: "input" | "multiple-choice" | "ordering" | "image-multiple-choice"; // Tipo de pregunta
+  question?: string; // Texto de la pregunta (opcional)
+  image?: string; // URL de la imagen (opcional)
+  options?: (string | number)[]; // Opciones de respuesta
+  correctAnswer?: string | number | (string | number)[]; // Respuesta correcta
+}
 
-const PowerGameLevel3: React.FC = () => {
+const PowerGameHard: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [userInput, setUserInput] = useState<string>(""); // Para preguntas de tipo input
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]); // Para "multiple-select"
-  const [orderedPowers, setOrderedPowers] = useState<string[]>([]); // Para "ordering"
+  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
+    []
+  ); // Para selección múltiple
+  const [orderedOptions, setOrderedOptions] = useState<(string | number)[]>([]); // Para ordenar potencias
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Para selección única
   const [showConfetti, setShowConfetti] = useState(false);
 
   const questions: Question[] = [
-    // Juego 1: Completa la multiplicación
+    // Pregunta 1: Completar el resultado de la potencia
     {
       type: "input",
-      question: "7³ = 7 x 7 x 7 = _____",
-      correctAnswer: 343,
+      question: "Completa el resultado de la potencia: 7² = 7 × 7 = _____",
+      correctAnswer: "49",
     },
+    // Pregunta 2: Completar el resultado de la potencia
     {
       type: "input",
-      question: "6⁵ = 6 x 6 x 6 x 6 x 6 = _____",
-      correctAnswer: 7776,
+      question: "Completa el resultado de la potencia: 9² = 9 × 9 = _____",
+      correctAnswer: "81",
     },
+    // Pregunta 3: Seleccionar potencias correctas
     {
-      type: "input",
-      question: "8³ = 8 x 8 x 8 = _____",
-      correctAnswer: 512,
-    },
-    // Juego 2: Selecciona las opciones correctas
-    {
-      type: "multiple-select",
+      type: "multiple-choice",
       question: "¿Cuáles de estas son potencias correctas?",
-      options: [
-        { value: "2³ = 6", isCorrect: false },
-        { value: "3⁴ = 81", isCorrect: true },
-        { value: "6³= 216", isCorrect: true },
-        { value: "10² = 101", isCorrect: false },
-      ],
+      options: ["2³ = 6", "3⁴ = 81", "6³ = 216", "10² = 101"],
+      correctAnswer: ["3⁴ = 81", "6³ = 216"],
     },
-    // Juego 3: Ordena las potencias de mayor a menor
+    // Pregunta 4: Ordenar potencias de mayor a menor
     {
       type: "ordering",
-      question: "Ordena las potencias de mayor a menor: 3⁴, 2², 5⁴, 4⁴",
-      powers: ["3⁴", "2²", "5⁴", "4⁴"],
-      correctOrder: ["5⁴", "3⁴", "4⁴", "2²"], // Orden correcto
+      question: "Ordena las potencias de mayor a menor:",
+      options: ["3⁴", "2⁵", "5³", "4³"],
+      correctAnswer: ["5³", "3⁴", "4³", "2⁵"],
+    },
+    // Pregunta 5: Seleccionar potencias incorrectas
+    {
+      type: "multiple-choice",
+      question: "¿Cuáles de estas son potencias incorrectas?",
+      options: ["3³ = 12", "5⁴ = 625", "2³ = 16", "3² = 6"],
+      correctAnswer: ["3³ = 12", "2³ = 16", "3² = 6"],
+    },
+    // Pregunta 6: Ordenar potencias de mayor a menor
+    {
+      type: "ordering",
+      question: "Ordena las potencias de mayor a menor:",
+      options: ["6²", "2⁷", "3⁴", "5³", "4⁴"],
+      correctAnswer: ["4⁴", "2⁷", "5³", "3⁴", "6²"],
+    },
+
+    // Pregunta 7: Imagen + selección múltiple
+    {
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENPN3.png", // Reemplaza con la ruta real de la imagen
+      options: [132, 142, 244, 144],
+      correctAnswer: 144,
+    },
+    // Pregunta 8: Imagen + selección múltiple
+    {
+      type: "image-multiple-choice",
+      question: "¿Cuál es el resultado de la potencia?",
+      image: "/ENPN5.png", // Reemplaza con la ruta real de la imagen
+      options: [0, 30, 1, 32],
+      correctAnswer: 1,
     },
   ];
 
@@ -57,7 +91,8 @@ const PowerGameLevel3: React.FC = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setUserInput("");
       setSelectedOptions([]);
-      setOrderedPowers([]);
+      setOrderedOptions([]);
+      setSelectedOption(null);
     } else {
       setShowSummary(true);
     }
@@ -67,7 +102,7 @@ const PowerGameLevel3: React.FC = () => {
     const currentQuestion = questions[currentQuestionIndex];
 
     if (currentQuestion.type === "input") {
-      if (Number(userInput) === currentQuestion.correctAnswer) {
+      if (userInput.trim() === currentQuestion.correctAnswer) {
         setScore(score + 100);
         setCorrectAnswers(correctAnswers + 1);
         setShowConfetti(true);
@@ -75,15 +110,14 @@ const PowerGameLevel3: React.FC = () => {
       } else {
         setIncorrectAnswers(incorrectAnswers + 1);
       }
-    } else if (currentQuestion.type === "multiple-select") {
-      const allCorrect =
-        selectedOptions.every(
-          (option) =>
-            currentQuestion.options?.find((opt) => opt.value === option)
-              ?.isCorrect,
-        ) &&
-        selectedOptions.length ===
-          currentQuestion.options?.filter((opt) => opt.isCorrect).length;
+    } else if (currentQuestion.type === "multiple-choice") {
+      const correctAnswerArray = currentQuestion.correctAnswer as (
+        | string
+        | number
+      )[];
+      const allCorrect = selectedOptions.every((option) =>
+        correctAnswerArray.includes(option)
+      );
       if (allCorrect) {
         setScore(score + 100);
         setCorrectAnswers(correctAnswers + 1);
@@ -94,8 +128,18 @@ const PowerGameLevel3: React.FC = () => {
       }
     } else if (currentQuestion.type === "ordering") {
       const isCorrectOrder =
-        orderedPowers.join(",") === currentQuestion.correctOrder?.join(",");
+        JSON.stringify(orderedOptions) ===
+        JSON.stringify(currentQuestion.correctAnswer);
       if (isCorrectOrder) {
+        setScore(score + 100);
+        setCorrectAnswers(correctAnswers + 1);
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      } else {
+        setIncorrectAnswers(incorrectAnswers + 1);
+      }
+    } else if (currentQuestion.type === "image-multiple-choice") {
+      if (selectedOption === currentQuestion.correctAnswer) {
         setScore(score + 100);
         setCorrectAnswers(correctAnswers + 1);
         setShowConfetti(true);
@@ -116,7 +160,8 @@ const PowerGameLevel3: React.FC = () => {
     setShowSummary(false);
     setUserInput("");
     setSelectedOptions([]);
-    setOrderedPowers([]);
+    setOrderedOptions([]);
+    setSelectedOption(null);
   };
 
   if (showSummary) {
@@ -171,7 +216,7 @@ const PowerGameLevel3: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Potencia Fun: Nivel Difícil
+              Potencia Fun!
             </h1>
             {currentQuestion.type === "input" ? (
               <>
@@ -186,7 +231,7 @@ const PowerGameLevel3: React.FC = () => {
                   className="p-4 rounded-lg text-xl font-bold w-full border-2 border-indigo-300 focus:border-indigo-500 transition-all"
                 />
               </>
-            ) : currentQuestion.type === "multiple-select" ? (
+            ) : currentQuestion.type === "multiple-choice" ? (
               <>
                 <p className="text-xl text-gray-600 mb-2">
                   {currentQuestion.question}
@@ -195,30 +240,23 @@ const PowerGameLevel3: React.FC = () => {
                   {currentQuestion.options?.map((option, index) => (
                     <button
                       key={index}
-                      onClick={() => {
-                        if (selectedOptions.includes(option.value)) {
-                          setSelectedOptions(
-                            selectedOptions.filter(
-                              (opt) => opt !== option.value,
-                            ),
-                          );
-                        } else {
-                          setSelectedOptions([
-                            ...selectedOptions,
-                            option.value,
-                          ]);
-                        }
-                      }}
+                      onClick={() =>
+                        setSelectedOptions((prev) =>
+                          prev.includes(option)
+                            ? prev.filter((item) => item !== option)
+                            : [...prev, option]
+                        )
+                      }
                       className={`
                         p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
                         ${
-                          selectedOptions.includes(option.value)
+                          selectedOptions.includes(option)
                             ? "bg-yellow-500 text-white"
                             : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
                         }
                       `}
                     >
-                      {option.value}
+                      {option}
                     </button>
                   ))}
                 </div>
@@ -228,25 +266,63 @@ const PowerGameLevel3: React.FC = () => {
                 <p className="text-xl text-gray-600 mb-2">
                   {currentQuestion.question}
                 </p>
-                <div className="flex flex-col gap-4">
-                  {currentQuestion.powers?.map((_power, index) => (
-                    <select
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {currentQuestion.options?.map((option, index) => (
+                    <button
                       key={index}
-                      value={orderedPowers[index] || ""}
-                      onChange={(e) => {
-                        const newOrder = [...orderedPowers];
-                        newOrder[index] = e.target.value;
-                        setOrderedPowers(newOrder);
-                      }}
-                      className="p-4 rounded-lg text-xl font-bold w-full border-2 border-indigo-300 focus:border-indigo-500 transition-all"
+                      onClick={() =>
+                        setOrderedOptions((prev) =>
+                          prev.includes(option)
+                            ? prev.filter((item) => item !== option)
+                            : [...prev, option]
+                        )
+                      }
+                      className={`
+                        p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
+                        ${
+                          orderedOptions.includes(option)
+                            ? "bg-yellow-500 text-white"
+                            : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
+                        }
+                      `}
                     >
-                      <option value="">Selecciona una potencia</option>
-                      {currentQuestion.powers?.map((p, idx) => (
-                        <option key={idx} value={p}>
-                          {p}
-                        </option>
-                      ))}
-                    </select>
+                      {option}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-lg text-gray-600 mb-4">
+                  Orden seleccionado: {orderedOptions.join(", ") || "Ninguno"}
+                </p>
+              </>
+            ) : currentQuestion.type === "image-multiple-choice" ? (
+              <>
+                <p className="text-xl text-gray-600 mb-2">
+                  {currentQuestion.question}
+                </p>
+                {currentQuestion.image && (
+                  <img
+                    src={currentQuestion.image}
+                    alt="Potencia"
+                    className="mx-auto mb-4 rounded-lg border-2 border-indigo-300"
+                    style={{ width: "150px", height: "150px" }}
+                  />
+                )}
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {currentQuestion.options?.map((option, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedOption(option)}
+                      className={`
+                        p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
+                        ${
+                          selectedOption === option
+                            ? "bg-yellow-500 text-white"
+                            : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
+                        }
+                      `}
+                    >
+                      {option}
+                    </button>
                   ))}
                 </div>
               </>
@@ -257,10 +333,12 @@ const PowerGameLevel3: React.FC = () => {
             onClick={handleSubmit}
             disabled={
               (currentQuestion.type === "input" && !userInput.trim()) ||
-              (currentQuestion.type === "multiple-select" &&
+              (currentQuestion.type === "multiple-choice" &&
                 selectedOptions.length === 0) ||
               (currentQuestion.type === "ordering" &&
-                orderedPowers.some((p) => !p))
+                orderedOptions.length !== currentQuestion.options?.length) ||
+              (currentQuestion.type === "image-multiple-choice" &&
+                selectedOption === null)
             }
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all disabled:bg-gray-400"
           >
@@ -272,4 +350,4 @@ const PowerGameLevel3: React.FC = () => {
   );
 };
 
-export default PowerGameLevel3;
+export default PowerGameHard;

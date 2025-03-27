@@ -1,76 +1,103 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-import { QuestionGameDecimalLevel3 } from "@/interfaces/gamesDecimal";
+import { QuestionLevel3 } from "@/interfaces/gamesDecimal";
+import { useNavigate } from "react-router-dom";
 
-const DecimalSystemGameLevel3: React.FC = () => {
+const DecompositionGameLevel3: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]); // Para almacenar las selecciones
+  const [selectedValues, setSelectedValues] = useState<
+    Record<string, string | number>
+  >({}); // Selecciones del usuario
   const [showConfetti, setShowConfetti] = useState(false);
+  const navigate = useNavigate();
 
-  const questions = React.useMemo<QuestionGameDecimalLevel3[]>(
-    () => [
-      {
-        type: "table-positioning",
-        question: "Completa la descomposición del número 47,306.",
-        positions: [
-          "Decenas de mil",
-          "Unidades de mil",
-          "Centenas",
-          "Decenas",
-          "Unidades",
-        ],
-        options: ["0", "3", "4", "6", "7"],
-        correctAnswer: ["4", "7", "3", "0", "6"],
+  const questions: QuestionLevel3[] = [
+    {
+      type: "image-selection",
+      question:
+        "Selecciona el valor correcto para cada posición del siguiente número:",
+      image: "/EDN31.png", // Reemplaza con la ruta real de la imagen
+      positions: [
+        { name: "Millones" },
+        { name: "Centenas de mil" },
+        { name: "Decenas de mil" },
+        { name: "Unidades de mil" },
+        { name: "Centenas" },
+        { name: "Decenas" },
+        { name: "Unidades" },
+      ],
+      options: [2, 5, 8, 4, 7, 3, 0, 6],
+      correctAnswers: {
+        Millones: 2,
+        "Centenas de mil": 5,
+        "Decenas de mil": 4,
+        "Unidades de mil": 7,
+        Centenas: 3,
+        Decenas: 0,
+        Unidades: 6,
       },
-      {
-        type: "table-positioning",
-        question: "Completa la descomposición del número 5,678,302.",
-        positions: [
-          "Millones",
-          "Centenas de mil",
-          "Decenas de mil",
-          "Unidades de mil",
-          "Centenas",
-          "Decenas",
-          "Unidades",
-        ],
-        options: ["0", "2", "3", "5", "6", "7", "8"],
-        correctAnswer: ["5", "6", "7", "8", "3", "0", "2"],
+    },
+    {
+      type: "image-selection",
+      question:
+        "Selecciona el valor correcto para cada posición del siguiente número:",
+      image: "/EDN32.png", // Reemplaza con la ruta real de la imagen
+      positions: [
+        { name: "Unidad de Millón" },
+        { name: "Centenas de mil" },
+        { name: "Decenas de mil" },
+        { name: "Unidades de mil" },
+        { name: "Centenas" },
+        { name: "Decenas" },
+        { name: "Unidades" },
+      ],
+      options: [5, 6, 7, 8, 3, 0, 2],
+      correctAnswers: {
+        "Unidad de Millón": 5,
+        "Centenas de mil": 6,
+        "Decenas de mil": 7,
+        "Unidades de mil": 8,
+        Centenas: 3,
+        Decenas: 0,
+        Unidades: 2,
       },
-      {
-        type: "table-positioning",
-        question: "Ubica el número 8,015,246 en la tabla posicional.",
-        positions: [
-          "Millones",
-          "Centenas de mil",
-          "Decenas de mil",
-          "Unidades de mil",
-          "Centenas",
-          "Decenas",
-          "Unidades",
-        ],
-        options: ["0", "1", "2", "4", "5", "6", "8"],
-        correctAnswer: ["8", "0", "1", "5", "2", "4", "6"],
+    },
+    {
+      type: "image-selection",
+      question:
+        "Selecciona el valor correcto para cada posición del siguiente número:",
+      image: "/EDN33.png", // Reemplaza con la ruta real de la imagen
+      positions: [
+        { name: "Unidad de Millón" },
+        { name: "Centenas de mil" },
+        { name: "Decenas de mil" },
+        { name: "Unidades de mil" },
+        { name: "Centenas" },
+        { name: "Decenas" },
+        { name: "Unidades" },
+      ],
+      options: [8, 0, 1, 5, 2, 4, 6],
+      correctAnswers: {
+        "Unidad de Millón": 8,
+        "Centenas de mil": 0,
+        "Decenas de mil": 1,
+        "Unidades de mil": 5,
+        Centenas: 2,
+        Decenas: 4,
+        Unidades: 6,
       },
-    ],
-    [],
-  );
-
-  useEffect(() => {
-    // Inicializar las selecciones vacías para cada pregunta
-    setSelectedValues(
-      Array(questions[currentQuestionIndex].positions.length).fill(""),
-    );
-  }, [currentQuestionIndex, questions]);
+    },
+  ];
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedValues({}); // Resetear las selecciones para la siguiente pregunta
     } else {
       setShowSummary(true);
     }
@@ -78,16 +105,23 @@ const DecimalSystemGameLevel3: React.FC = () => {
 
   const handleSubmit = () => {
     const currentQuestion = questions[currentQuestionIndex];
+    let isCorrect = true;
 
-    const isCorrect = selectedValues.every(
-      (value, index) => value === currentQuestion.correctAnswer[index],
-    );
+    for (const position of currentQuestion.positions) {
+      if (
+        selectedValues[position.name] !==
+        currentQuestion.correctAnswers[position.name]
+      ) {
+        isCorrect = false;
+        break;
+      }
+    }
 
     if (isCorrect) {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -101,12 +135,12 @@ const DecimalSystemGameLevel3: React.FC = () => {
     setCorrectAnswers(0);
     setIncorrectAnswers(0);
     setShowSummary(false);
-    setSelectedValues([]);
+    setSelectedValues({});
   };
 
   if (showSummary) {
     return (
-      <div className="min-h-screen bg-pink-50 to-purple-600 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full text-center relative">
           <Trophy className="text-yellow-500 mx-auto mb-4 w-16 h-16 animate-bounce" />
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -117,12 +151,20 @@ const DecimalSystemGameLevel3: React.FC = () => {
             Respuestas Correctas: {correctAnswers} | Respuestas Incorrectas:{" "}
             {incorrectAnswers}
           </p>
-          <button
-            onClick={restartGame}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
-          >
-            Jugar de Nuevo
-          </button>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={restartGame}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
+            >
+              Jugar de Nuevo
+            </button>
+            <button
+              onClick={() => navigate("levels/decimal-system")} // Usa navigate en lugar de <a>
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
+            >
+              Ir a otra sección
+            </button>
+          </div>
           <Sparkles className="absolute top-0 right-0 w-16 h-16 text-yellow-400 animate-spin" />
         </div>
       </div>
@@ -132,7 +174,7 @@ const DecimalSystemGameLevel3: React.FC = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-pink-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4 relative">
       {/* Animación de Confeti */}
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -156,32 +198,36 @@ const DecimalSystemGameLevel3: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Sistema Decimal Fun: Nivel 3
+              Descomposición Numérica Fun!
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
-
-            {/* Tabla Posicional */}
-            <div className="grid grid-cols-1 gap-4 mb-8">
+            <img
+              src={currentQuestion.image}
+              alt="Tabla de Valor Posicional"
+              className="mx-auto mb-4 rounded-lg border-2 border-indigo-300"
+              style={{ width: "350px", height: "150px" }}
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
               {currentQuestion.positions.map((position, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between gap-4"
-                >
-                  <p className="text-lg font-bold">{position}:</p>
+                <div key={index} className="flex flex-col gap-2">
+                  <label className="text-lg font-bold text-indigo-800">
+                    {position.name}: {"___"}
+                  </label>
                   <select
-                    value={selectedValues[index] || ""}
-                    onChange={(e) => {
-                      const newValues = [...selectedValues];
-                      newValues[index] = e.target.value;
-                      setSelectedValues(newValues);
-                    }}
-                    className="p-2 px-8 rounded-lg border-2 border-indigo-300 focus:border-indigo-500 transition-all"
+                    value={selectedValues[position.name] || ""}
+                    onChange={(e) =>
+                      setSelectedValues({
+                        ...selectedValues,
+                        [position.name]: e.target.value,
+                      })
+                    }
+                    className="p-4 rounded-lg text-lg font-bold border-2 border-indigo-300 focus:border-indigo-500 transition-all"
                   >
-                    <option value="">Selecciona</option>
-                    {currentQuestion.options.map((option, idx) => (
-                      <option key={idx} value={option}>
+                    <option value="">Selecciona una opción</option>
+                    {currentQuestion.options.map((option, optionIndex) => (
+                      <option key={optionIndex} value={option}>
                         {option}
                       </option>
                     ))}
@@ -193,7 +239,10 @@ const DecimalSystemGameLevel3: React.FC = () => {
 
           <button
             onClick={handleSubmit}
-            disabled={selectedValues.some((value) => !value)}
+            disabled={
+              Object.keys(selectedValues).length !==
+              currentQuestion.positions.length
+            }
             className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all disabled:bg-gray-400"
           >
             Siguiente
@@ -203,5 +252,4 @@ const DecimalSystemGameLevel3: React.FC = () => {
     </div>
   );
 };
-
-export default DecimalSystemGameLevel3;
+export default DecompositionGameLevel3;

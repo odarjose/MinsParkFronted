@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-import { QuestionDivisionLevel2 } from "@/interfaces/gamesDivisionInterface";
-
+import { QuestionLevel2 } from "@/interfaces/gamesDivisionInterface";
 
 const DivisionGameLevel2: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -10,27 +9,68 @@ const DivisionGameLevel2: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const questions: QuestionDivisionLevel2[] = [
+  const questions: QuestionLevel2[] = [
     {
       type: "multiple-choice",
-      question: "125 ÷ 5 =",
-      options: [5, 15, 25],
+      question:
+        "Observa la siguiente división y selecciona si es exacta o inexacta: 47 ÷ 5 =",
+      options: ["Exacta", "Inexacta"],
+      correctAnswer: "Inexacta",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Observa la siguiente división y selecciona si es exacta o inexacta: 528 ÷ 12 =",
+      options: ["Exacta", "Inexacta"],
+      correctAnswer: "Exacta",
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Observa la siguiente división y selecciona si es exacta o inexacta: 215 ÷ 12 =",
+      options: ["Exacta", "Inexacta"],
+      correctAnswer: "Inexacta",
+    },
+    {
+      type: "multiple-choice",
+      question: "Halla el resultado de la división: 125 ÷ 5 =",
+      options: [5, 15, 25, 35],
       correctAnswer: 25,
     },
     {
       type: "multiple-choice",
-      question: "168 ÷ 42 =",
-      options: [44, 4, 15],
+      question: "Halla el resultado de la división: 168 ÷ 42 =",
+      options: [44, 14, 4, 15],
       correctAnswer: 4,
     },
     {
       type: "multiple-choice",
-      question: "529 ÷ 23 =",
-      options: [23, 43, 53],
+      question: "Halla el resultado de la división: 529 ÷ 23 =",
+      options: [23, 43, 53, 73],
       correctAnswer: 23,
+    },
+    {
+      type: "multiple-choice",
+      question: "Halla el resultado de la división: 125 ÷ 25 =",
+      options: [5, 15, 25, 35],
+      correctAnswer: 5,
+    },
+    {
+      type: "multiple-choice",
+      question: "Halla el resultado de la división: 288 ÷ 9 =",
+      options: [42, 38, 32, 48],
+      correctAnswer: 32,
+    },
+    {
+      type: "multiple-choice",
+      question: "Halla el resultado de la división: 288 ÷ 9 =",
+      options: [42, 38, 32, 48],
+      correctAnswer: 32,
     },
   ];
 
@@ -50,7 +90,7 @@ const DivisionGameLevel2: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -118,9 +158,7 @@ const DivisionGameLevel2: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              División Fun: Nivel 2
-            </h1>
+            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>

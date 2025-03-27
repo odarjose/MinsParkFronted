@@ -1,35 +1,92 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-import { QuestionGameDecimalLevel2 } from "@/interfaces/gamesDecimal";
+import { QuestionLevel2 } from "@/interfaces/gamesDecimal";
 
-const DecimalSystemGameLevel2: React.FC = () => {
+
+const DecompositionGameLevel2: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const questions: QuestionGameDecimalLevel2[] = [
+  const questions: QuestionLevel2[] = [
     {
-      type: "multiple-choice",
-      question: "¿Cuál es el valor del dígito 6 en el número 96,753?",
-      options: ["6,000", "60,000", "600"],
-      correctAnswer: "6,000",
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 96,753 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 6?",
+      image: "/ESD1.png", // Reemplaza con la ruta real de la imagen
+      options: [6000, 60000, 600, 60],
+      correctAnswer: 6000,
     },
     {
-      type: "multiple-choice",
-      question: "¿Cuál es el valor del dígito 3 en el número 23,847?",
-      options: ["300", "3,000", "30"],
-      correctAnswer: "3,000",
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 23,847 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 3?",
+      image: "/ESD2.png", // Reemplaza con la ruta real de la imagen
+      options: [300, 3000, 30, 3],
+      correctAnswer: 3000,
     },
     {
-      type: "multiple-choice",
-      question: "¿Cuál es el valor del dígito 1 en el número 8,512?",
-      options: ["10", "1,000", "100"],
-      correctAnswer: "10",
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 8,512 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 1?",
+      image: "/ESD3.png", // Reemplaza con la ruta real de la imagen
+      options: [10, 1000, 100, 100000],
+      correctAnswer: 10,
+    },
+    {
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 968,753 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 9?",
+      image: "/ESD4.png", // Reemplaza con la ruta real de la imagen
+      options: [9000, 90000, 900, 900000],
+      correctAnswer: 900000,
+    },
+    {
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 23,847 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 3?",
+      image: "/ESD5.png", // Reemplaza con la ruta real de la imagen
+      options: [300, 3000, 30, 30000],
+      correctAnswer: 3000,
+    },
+    {
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 75 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 7?",
+      image: "/ESD6.png", // Reemplaza con la ruta real de la imagen
+      options: [700, 70, 7, 7000],
+      correctAnswer: 70,
+    },
+    {
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 34,548 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 3?",
+      image: "/ESD7.png", // Reemplaza con la ruta real de la imagen
+      options: [30000, 3000, 300, 30000000],
+      correctAnswer: 30000,
+    },
+    {
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 562 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 5?",
+      image: "/ESD8.png", // Reemplaza con la ruta real de la imagen
+      options: [50, 500, 5, 5000],
+      correctAnswer: 500,
+    },
+    {
+      type: "image-multiple-choice",
+      question:
+        "Si descomponemos el número 465,235 según el valor posicional de sus dígitos, ¿cuál es el valor del dígito 4?",
+      image: "/ESD9.png", // Reemplaza con la ruta real de la imagen
+      options: [40000, 400000, 400, 4000],
+      correctAnswer: 400000,
     },
   ];
 
@@ -49,7 +106,7 @@ const DecimalSystemGameLevel2: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -94,7 +151,7 @@ const DecimalSystemGameLevel2: React.FC = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen bg-gradient-to-br bg-pink-50  flex items-center justify-center p-4 relative">
       {/* Animación de Confeti */}
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -118,12 +175,18 @@ const DecimalSystemGameLevel2: React.FC = () => {
 
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Sistema Decimal Fun: Nivel 2
+              Descomposición Numérica Fun!
             </h1>
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
-            <div className="grid grid-cols-1 gap-4 mb-8">
+            <img
+              src={currentQuestion.image}
+              alt="Tabla de Valor Posicional"
+              className="mx-auto mb-4 rounded-lg border-2 border-indigo-300"
+              style={{ width: "350px", height: "150px" }}
+            />
+            <div className="grid grid-cols-2 gap-4 mb-8">
               {currentQuestion.options.map((option, index) => (
                 <button
                   key={index}
@@ -156,4 +219,4 @@ const DecimalSystemGameLevel2: React.FC = () => {
   );
 };
 
-export default DecimalSystemGameLevel2;
+export default DecompositionGameLevel2;

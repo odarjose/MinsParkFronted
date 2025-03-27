@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
-import { QuestionDivisionLevel3 } from "@/interfaces/gamesDivisionInterface";
-
+import { QuestionLevel3 } from "@/interfaces/gamesDivisionInterface";
+import { useNavigate } from "react-router-dom";
 
 const DivisionGameLevel3: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -10,10 +10,13 @@ const DivisionGameLevel3: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null); // Para selección múltiple
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
+  const navigate = useNavigate();
 
-  const questions: QuestionDivisionLevel3[] = [
+  const questions: QuestionLevel3[] = [
     {
       type: "multiple-choice",
       question:
@@ -27,6 +30,27 @@ const DivisionGameLevel3: React.FC = () => {
         "Un agricultor tiene 240 manzanas y las quiere colocar en 8 canastas con la misma cantidad en cada una. ¿Cuántas manzanas habrá en cada canasta?",
       options: [40, 30, 15, 20],
       correctAnswer: 30,
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Ana tiene 144 globos y quiere repartirlos en 12 bolsas, poniendo la misma cantidad en cada una. ¿Cuántos globos hay en cada bolsa?",
+      options: [10, 12, 14, 16],
+      correctAnswer: 12,
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Una fábrica de chocolates empaqueta 225 chocolates en 15 cajas con la misma cantidad. ¿Cuántos chocolates hay en cada caja?",
+      options: [10, 35, 25, 15],
+      correctAnswer: 15,
+    },
+    {
+      type: "multiple-choice",
+      question:
+        "Una maestra tiene 312 lápices y los distribuye entre 24 estudiantes en partes iguales. ¿Cuántos lápices recibe cada estudiante?",
+      options: [30, 35, 23, 13],
+      correctAnswer: 13,
     },
   ];
 
@@ -46,7 +70,7 @@ const DivisionGameLevel3: React.FC = () => {
       setScore(score + 100);
       setCorrectAnswers(correctAnswers + 1);
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000); // Mostrar confeti durante 3 segundos
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       setIncorrectAnswers(incorrectAnswers + 1);
     }
@@ -76,12 +100,21 @@ const DivisionGameLevel3: React.FC = () => {
             Respuestas Correctas: {correctAnswers} | Respuestas Incorrectas:{" "}
             {incorrectAnswers}
           </p>
-          <button
-            onClick={restartGame}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
-          >
-            Jugar de Nuevo
-          </button>
+
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={restartGame}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
+            >
+              Jugar de Nuevo
+            </button>
+            <button
+              onClick={() => navigate("levels/powers")} // Usa navigate en lugar de <a>
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
+            >
+              Ir a otra sección
+            </button>
+          </div>
           <Sparkles className="absolute top-0 right-0 w-16 h-16 text-yellow-400 animate-spin" />
         </div>
       </div>
@@ -114,9 +147,7 @@ const DivisionGameLevel3: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              División Fun: Nivel 3
-            </h1>
+            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>

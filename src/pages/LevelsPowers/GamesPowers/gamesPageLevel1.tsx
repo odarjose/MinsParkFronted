@@ -10,47 +10,79 @@ const GamesPowers: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number | string | null>(
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
     null
-  ); // Para preguntas de selección múltiple
+  ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
   const questions: Question[] = [
+    // Ejercicio 1: Imagen + opciones de descomposición
+    {
+      type: "image-multiple-choice",
+      question:
+        "Selecciona la descomposición correcta de la siguiente potencia:",
+      image: "/EP1.png", // Reemplaza con la URL real de la imagen
+      options: ["2 + 2 + 2", "2 x 3", "2 x 2 x 2", "3 x 3 x 3"],
+      correctAnswer: "2 x 2 x 2",
+    },
+    // Ejercicio 2: Imagen + opciones de descomposición
+    {
+      type: "image-multiple-choice",
+      question:
+        "Selecciona la descomposición correcta de la siguiente potencia:",
+      image: "/EP2.png", // Reemplaza con la URL real de la imagen
+      options: ["9 + 9 + 9 + 9 + 9", "9 x 9 x 9 x 9 x 9", "5 x 9", "3 x 3 x 3"],
+      correctAnswer: "9 x 9 x 9 x 9 x 9",
+    },
+    // Ejercicio 3: Imagen + opciones de descomposición
+    {
+      type: "image-multiple-choice",
+      question: "Descompón la siguiente potencia:",
+      image: "/EP3.png", // Reemplaza con la URL real de la imagen
+      options: [
+        "1 + 1 + 1 + 1 + 1 + 1 + 1 + 1",
+        "1 x 1 x 1 x 1 x 1 x 1 x 1 x 1",
+        "1 x 8",
+        "8 x 1",
+      ],
+      correctAnswer: "1 x 1 x 1 x 1 x 1 x 1 x 1 x 1",
+    },
+    // Ejercicio 4: Imagen + opciones de descomposición
+    {
+      type: "image-multiple-choice",
+      question: "Descompón la siguiente potencia:",
+      image: "/EP4.png", // Reemplaza con la URL real de la imagen
+      options: ["5 x 5", "5 x 2", "5 + 5", "2 x 5"],
+      correctAnswer: "5 x 5",
+    },
+    // Ejercicio 5: Sin imagen
     {
       type: "multiple-choice",
-      question: "2 × 2 × 2 × 2 = ",
-      options: ["2⁶", "2⁴", "2⁵", "2⁰"],
-      correctAnswer: "2⁴",
+      question:
+        "¿Cuál es la potencia que representa la multiplicación? 🔹 2 × 2 × 2 × 2 × 2 =",
+      options: ["2⁴", "2⁵", "2⁶"],
+      correctAnswer: "2⁵",
     },
     {
       type: "multiple-choice",
-      question: "3 × 3 × 3 × 3 × 3 × 3 = ",
-      options: ["3¹", "3⁶", "3¹⁰", "3⁷"],
-      correctAnswer: "3⁶",
-    },
-    { 
-      type: "multiple-choice",
-      question: "9 × 9 × 9 × 9 × 9 = ",
-      options: ["9²", "9⁵", "9⁶", "9⁸"],
-      correctAnswer: "9⁵",
+      question:
+        "¿Cuál es la potencia que representa la multiplicación? 🔹 9 × 9 × 9 × 9 × 9 × 9 =",
+      options: ["9⁸", "9⁶", "9⁹"],
+      correctAnswer: "9⁶",
     },
     {
       type: "multiple-choice",
-      question: "¿Cuál es el resultado de 2^3?",
-      options: [6, 4, 8, 16],
-      correctAnswer: 8,
+      question:
+        "¿Cuál es la potencia que representa la multiplicación? 🔹 7 × 7 × 7 =",
+      options: ["7²", "7³", "7⁵"],
+      correctAnswer: "7³",
     },
     {
       type: "multiple-choice",
-      question: "¿Cuál es el resultado de 4^3?",
-      options: [64, 75, 4, 65],
-      correctAnswer: 64,
-    },
-    {
-      type: "multiple-choice",
-      question: "¿Cuál es el resultado de 9^2?",
-      options: [78, 49, 80, 81],
-      correctAnswer: 81,
+      question:
+        "¿Cuál es la potencia que representa la multiplicación? 🔹 10 × 10 × 10 × 10 × 10 =",
+      options: ["10²", "10³", "10⁵"],
+      correctAnswer: "10⁵",
     },
   ];
 
@@ -137,31 +169,61 @@ const GamesPowers: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Potencia == Diversión
-            </h1>
-            <p className="text-xl text-gray-600 mb-2">
-              {currentQuestion.question}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            {currentQuestion.options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedOption(option)}
-                className={`
-                  p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
-                  ${
-                    selectedOption === option
-                      ? "bg-yellow-300 text-white" // Color amarillo para cualquier selección
-                      : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
-                  }
-                `}
-              >
-                {option}
-              </button>
-            ))}
+            {currentQuestion.type === "image-multiple-choice" ? (
+              <>
+                <p className="text-xl text-gray-600 mb-2">
+                  {currentQuestion.question}
+                </p>
+                <img
+                  src={currentQuestion.image}
+                  alt="Potencia"
+                  className="mx-auto mb-4 rounded-lg border-2 border-indigo-300"
+                  style={{ width: "150px", height: "150px" }}
+                />
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedOption(option)}
+                      className={`
+                        p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
+                        ${
+                          selectedOption === option
+                            ? "bg-yellow-500 text-white"
+                            : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
+                        }
+                      `}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-xl text-gray-600 mb-2">
+                  {currentQuestion.question}
+                </p>
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedOption(option)}
+                      className={`
+                        p-6 rounded-lg text-xl font-bold transition-all transform hover:scale-105
+                        ${
+                          selectedOption === option
+                            ? "bg-yellow-500 text-white"
+                            : "bg-indigo-100 text-indigo-800 hover:bg-indigo-200"
+                        }
+                      `}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
 
           <button

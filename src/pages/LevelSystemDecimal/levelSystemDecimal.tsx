@@ -11,6 +11,8 @@ export function LevelsDecimalSystem() {
       <LevelsComponents
         title="Cada número es como un rompecabezas: cada dígito tiene su lugar y su valor. ¡Aprende a descomponerlos y verás lo fácil que es entenderlos!"
         levels={levelsDecimalSystem}
+        backPath="/decimal/image" // Ruta para "Volver a Inicio"
+        nextPath="/"
       />
     </VideoGate>
   );

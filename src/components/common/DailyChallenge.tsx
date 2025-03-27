@@ -4,7 +4,7 @@ interface DailyChallengeProps {
   challengeText: string;
   buttonText: string;
   onClick: () => void;
-  size?: "small" | "medium" | "large"; 
+  size?: "small" | "medium" | "large";
 }
 
 export function DailyChallenge({
@@ -17,7 +17,7 @@ export function DailyChallenge({
     <Card className="mt-12" size={size}>
       <div>
         <h3 className="text-xl font-semibold text-gray-900 mb-4">
-          Daily Challenge
+          Desafío diario
         </h3>
         <div className="bg-purple-50 rounded-lg p-4">
           <p className="text-gray-800">{challengeText}</p>

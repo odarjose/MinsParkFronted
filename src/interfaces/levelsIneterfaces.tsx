@@ -14,6 +14,8 @@ export interface Level {
 export interface LevelsComponentsProps {
   title: string;
   levels: Level[];
+  backPath: string;
+  nextPath: string;
 }
 
 // Definir los tipos de las questions

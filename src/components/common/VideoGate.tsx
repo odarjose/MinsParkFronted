@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import YouTube, { YouTubePlayer } from "react-youtube";
 
@@ -11,7 +12,7 @@ export default function VideoGate({
   children: React.ReactNode;
 }) {
   const [videoEnded, setVideoEnded] = useState(false);
-  const [player, setPlayer] = useState<YouTubePlayer | null>(null);
+  const [setPlayer] = useState<YouTubePlayer | null>(null);
 
   const onVideoEnd = () => {
     setVideoEnded(true);
@@ -31,10 +32,8 @@ export default function VideoGate({
     },
   };
 
-  const handlePlayClick = () => {
-    if (player) {
-      player.playVideo();
-    }
+  const handleSkipVideo = () => {
+    setVideoEnded(true); // Saltar el video y mostrar el contenido
   };
 
   return (
@@ -56,17 +55,17 @@ export default function VideoGate({
               className="w-full px-10 h-full"
             />
           </div>
+          {/* Botón para saltar el video */}
           <button
-            onClick={handlePlayClick}
-            className="mt-2 px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
+            onClick={handleSkipVideo}
+            className="mt-6 px-6 py-2 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-gray-600 transition"
           >
-            Reproducir video
+            Saltar video
           </button>
         </div>
       ) : (
-        <div className="w-full max-w-5xl p-6 bg-white rounded-lg shadow-lg">
-          {children}
-        </div>
+        // Mostrar el contenido después de que el video termine o se salte
+        React.cloneElement(children as React.ReactElement, { videoEnded })
       )}
     </div>
   );
