@@ -10,7 +10,7 @@ function Login() {
 
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [avatar, setAvatar] = useState("");
+
   const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,7 +22,7 @@ function Login() {
           nombre,
           apellido,
           alias,
-          avatar,
+          
         });
         alert(response.message); // Muestra mensaje de éxito
         setIsRegistering(false); // Cambia al modo de login
@@ -103,18 +103,7 @@ function Login() {
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Avatar (URL)
-                    </label>
-                    <input
-                      type="text"
-                      value={avatar}
-                      onChange={(e) => setAvatar(e.target.value)}
-                      className="w-full px-4 py-2 rounded-xl border border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition-all duration-200 bg-white/50"
-                      placeholder="URL de tu avatar"
-                    />
-                  </div>
+                  
                 </>
               )}
 

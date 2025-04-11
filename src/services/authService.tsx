@@ -11,7 +11,7 @@ export const registerStudent = async (studentData: {
   nombre: string;
   apellido: string;
   alias: string;
-  avatar: string;
+
 }) => {
   try {
     // Validar que los campos obligatorios estén presentes
