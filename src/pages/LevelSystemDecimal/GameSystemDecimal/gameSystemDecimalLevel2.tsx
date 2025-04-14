@@ -145,7 +145,7 @@ const DecompositionGameLevel2: React.FC = () => {
               Jugar de Nuevo
             </button>
             <button
-              onClick={() => navigate("levels/decimal-system")} // Usa navigate en lugar de <a>
+              onClick={() => navigate("/levels/decimal-system")} // Usa navigate en lugar de <a>
               className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
             >
               Ir a otra sección

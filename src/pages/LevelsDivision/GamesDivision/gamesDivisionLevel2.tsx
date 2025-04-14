@@ -131,7 +131,7 @@ const DivisionGameLevel2: React.FC = () => {
               Jugar de Nuevo
             </button>
             <button
-              onClick={() => navigate("levels/division")} // Usa navigate en lugar de <a>
+              onClick={() => navigate("/levels/division")} // Usa navigate en lugar de <a>
               className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
             >
               Ir a otra sección
