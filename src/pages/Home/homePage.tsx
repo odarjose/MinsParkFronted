@@ -23,7 +23,7 @@ export function Home() {
             key={topic.id}
             title={topic.title}
             description={topic.description}
-            icon={topic.icon}
+            imageSrc={topic.imageSrc}
             difficulty={topic.difficulty}
             onClick={() => navigate(topic.path)}
             size="medium" // Puedes cambiar a 'small' o 'large'
@@ -33,9 +33,9 @@ export function Home() {
 
       <div className=" px-4 sm:px-6 lg:px-8 grid grid-cols-1 s gap-6">
         <DailyChallenge
-          challengeText="Si Sara tiene 24 galletas y quiere repartirlas equitativamente entre 6 amigos, ¿cuántas galletas recibirá cada amigo?"
+          challengeText="Un agricultor cosecha 156 manzanas diarias. ¿Cuántas manzanas cosechará en 18 días?"
           buttonText="Comenzar"
-          onClick={() => navigate("/practicar")}
+          onClick={() => navigate("/gameDiary")}
           size="large"
         />
       </div>

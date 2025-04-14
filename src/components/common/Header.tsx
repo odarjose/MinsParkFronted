@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Home, Brain, User, Pickaxe, Menu, X } from "lucide-react";
+import { Home, User, Pickaxe, Menu, X } from "lucide-react";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,7 +12,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-transparent w-full">
+    <header className=" w-full ">
       <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
         {/* Logo */}
         <Link to="/">
@@ -39,12 +39,12 @@ export function Header() {
         <nav
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } sm:flex sm:space-x-6 absolute sm:static top-16 lg:top-2 right-0 bg-pink-50  w-full sm:w-auto  sm:shadow-none p-4 sm:p-0
+          } sm:flex sm:space-x-6 absolute sm:static top-16 lg:top-2 right-0 w-full sm:w-auto  sm:shadow-none p-4 sm:p-0
           `}
         >
           <Link
             to="/"
-            className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 sm:p-0"
+            className="flex items-center space-x-1 text-gray-800 hover:text-purple-600 p-2 sm:p-0"
           >
             <Home className="w-6 h-6" />
             <span>Inicio</span>
@@ -52,23 +52,15 @@ export function Header() {
 
           <Link
             to="/progress"
-            className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 sm:p-0"
+            className="flex items-center space-x-1 text-gray-800 hover:text-purple-600 p-2 sm:p-0"
           >
             <Pickaxe className="w-6 h-6" />
             <span>Progreso</span>
           </Link>
 
           <Link
-            to="/practicar"
-            className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 sm:p-0"
-          >
-            <Brain className="w-6 h-6" />
-            <span>Practicar</span>
-          </Link>
-
-          <Link
             to="/profile"
-            className="flex items-center space-x-1 text-gray-600 hover:text-purple-600 p-2 sm:p-0"
+            className="flex items-center space-x-1 text-gray-800 hover:text-purple-600 p-2 sm:p-0"
           >
             <User className="w-6 h-6" />
             <span>Perfil</span>

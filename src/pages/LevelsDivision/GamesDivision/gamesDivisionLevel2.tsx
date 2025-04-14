@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
 import { QuestionLevel2 } from "@/interfaces/gamesDivisionInterface";
+import { useNavigate } from "react-router-dom";
 
 const DivisionGameLevel2: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -9,8 +10,9 @@ const DivisionGameLevel2: React.FC = () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
+
   const [selectedOption, setSelectedOption] = useState<string | number | null>(
-    null
+    null,
   ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -82,6 +84,7 @@ const DivisionGameLevel2: React.FC = () => {
       setShowSummary(true);
     }
   };
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -109,7 +112,7 @@ const DivisionGameLevel2: React.FC = () => {
 
   if (showSummary) {
     return (
-      <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4">
+      <div className="min-h-screen  flex items-center justify-center p-4">
         <div className="bg-white rounded-xl shadow-2xl p-8 max-w-3xl w-full text-center relative">
           <Trophy className="text-yellow-500 mx-auto mb-4 w-16 h-16 animate-bounce" />
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -120,12 +123,20 @@ const DivisionGameLevel2: React.FC = () => {
             Respuestas Correctas: {correctAnswers} | Respuestas Incorrectas:{" "}
             {incorrectAnswers}
           </p>
-          <button
-            onClick={restartGame}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
-          >
-            Jugar de Nuevo
-          </button>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={restartGame}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
+            >
+              Jugar de Nuevo
+            </button>
+            <button
+              onClick={() => navigate("levels/division")} // Usa navigate en lugar de <a>
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
+            >
+              Ir a otra sección
+            </button>
+          </div>
           <Sparkles className="absolute top-0 right-0 w-16 h-16 text-yellow-400 animate-spin" />
         </div>
       </div>
@@ -135,7 +146,7 @@ const DivisionGameLevel2: React.FC = () => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br bg-pink-50 flex items-center justify-center p-4 relative">
+    <div className="min-h-screen flex items-center justify-center p-4 relative">
       {/* Animación de Confeti */}
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
@@ -158,7 +169,6 @@ const DivisionGameLevel2: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>

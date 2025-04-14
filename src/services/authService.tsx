@@ -11,7 +11,6 @@ export const registerStudent = async (studentData: {
   nombre: string;
   apellido: string;
   alias: string;
-
 }) => {
   try {
     // Validar que los campos obligatorios estén presentes
@@ -21,10 +20,11 @@ export const registerStudent = async (studentData: {
 
     const response = await axios.post(`${API_URL}/auth/register`, studentData);
     return response.data; // Retorna los datos del estudiante registrado
-  } catch (error: any) {
-    throw new Error(
-      error.response?.data?.mensaje || "Error al registrar el estudiante"
-    );
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response?.data?.mensaje) {
+      throw new Error(error.response.data.mensaje);
+    }
+    throw new Error("Error al registrar el estudiante");
   }
 };
 
@@ -32,7 +32,12 @@ export const loginStudent = async (alias: string) => {
   try {
     const response = await axios.post(`${API_URL}/auth/login`, { alias });
     return response.data; // Retorna el token
-  } catch (error: any) {
-    throw new Error(error.response?.data?.message || "Error al iniciar sesión");
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message || "Error al iniciar sesión",
+      );
+    }
+    throw new Error("Error al iniciar sesión");
   }
 };
