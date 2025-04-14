@@ -28,7 +28,7 @@ import DecimalSystemGameLevel3 from "@/pages/LevelSystemDecimal/GameSystemDecima
 import Onesept from "@/pages/LevelSystemDecimal/Onesept";
 import OneseptMultiply from "@/pages/LevelsMultiply/OneStep";
 import OneStepDivision from "@/pages/LevelsDivision/OneSptep";
-
+import DailyProblemsGame from "@/pages/gamesDiary/games";
 import OneseptPowers from "@/pages/LevelsPowers/OneStep";
 
 import Login from "@/pages/Login/Login";
@@ -57,6 +57,7 @@ const AppRoutes = () => {
           <Route path="games/division/1" element={<DivisionGame />} />
           <Route path="games/division/2" element={<DivisionGameLevel2 />} />
           <Route path="games/division/3" element={<DivisionGameLevel3 />} />
+
           <Route
             path="games/multiplication/1"
             element={<MultiplicationGameLevel1 />}
@@ -85,6 +86,8 @@ const AppRoutes = () => {
           <Route path="multiply/image" element={<OneseptMultiply />} />
           <Route path="division/image" element={<OneStepDivision />} />
           <Route path="potencia/image" element={<OneseptPowers />} />
+
+          <Route path="gameDiary" element={<DailyProblemsGame />} />
         </Route>
       </Route>
     </Routes>

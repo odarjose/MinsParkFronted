@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Sparkles, Star, Trophy } from "lucide-react";
 import Confetti from "react-confetti";
 import { QuestionMultiplyLevel1 } from "@/interfaces/gamesMultiplyInterface";
+import { useNavigate } from "react-router-dom";
 
 const MultiplicationGameLevel1: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -10,10 +11,10 @@ const MultiplicationGameLevel1: React.FC = () => {
   const [incorrectAnswers, setIncorrectAnswers] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | number | null>(
-    null
+    null,
   ); // Selección del usuario
   const [showConfetti, setShowConfetti] = useState(false);
-
+  const navigate = useNavigate();
   const questions: QuestionMultiplyLevel1[] = [
     {
       type: "multiple-choice",
@@ -123,12 +124,20 @@ const MultiplicationGameLevel1: React.FC = () => {
             Respuestas Correctas: {correctAnswers} | Respuestas Incorrectas:{" "}
             {incorrectAnswers}
           </p>
-          <button
-            onClick={restartGame}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
-          >
-            Jugar de Nuevo
-          </button>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={restartGame}
+              className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-all"
+            >
+              Jugar de Nuevo
+            </button>
+            <button
+              onClick={() => navigate("levels/multiplication")}
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition-all"
+            >
+              Ir a otra sección
+            </button>
+          </div>
           <Sparkles className="absolute top-0 right-0 w-16 h-16 text-yellow-400 animate-spin" />
         </div>
       </div>
@@ -161,7 +170,6 @@ const MultiplicationGameLevel1: React.FC = () => {
           </div>
 
           <div className="text-center mb-8">
-            
             <p className="text-xl text-gray-600 mb-2">
               {currentQuestion.question}
             </p>
